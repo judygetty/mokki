@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mökki — Wellness & Longevity · Geneva</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#F5F0E8;
+  --bark:#1E160D;
+  --bark80:rgba(30,22,13,0.8);
+  --bark20:rgba(30,22,13,0.14);
+  --moss:#3A5828;
+  --sage:#6B9A5A;
+  --terra:#BF5530;
+  --gold:#A8825A;
+  --warm:#EAE2D5;
+  --glass:rgba(245,240,232,0.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',Georgia,sans-serif;background:var(--cream);color:var(--bark);overflow-x:hidden;cursor:none}
+
+/* Cursor */
+#cur{position:fixed;width:8px;height:8px;background:var(--terra);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur-r{position:fixed;width:34px;height:34px;border:1px solid rgba(191,85,48,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s,height .25s,opacity .25s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:600;padding:1.1rem 3.5rem;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.7rem;font-weight:600;color:#fff;letter-spacing:-.01em;text-shadow:0 1px 12px rgba(0,0,0,0.3)}
+.nav-logo span{color:rgba(255,200,160,0.9);font-style:italic}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{text-decoration:none;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:rgba(255,255,255,0.14);color:#fff;padding:.55rem 1.4rem;border-radius:2rem;border:1px solid rgba(255,255,255,0.28);font-family:'Outfit',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .25s;backdrop-filter:blur(8px)}
+.nav-cta:hover{background:var(--terra);border-color:var(--terra)}
+
+/* ── HERO ── */
+.hero{position:relative;width:100%;height:100vh;min-height:700px;overflow:hidden}
+
+/* Full-bleed SVG store scene */
+.hero-scene{position:absolute;inset:0;width:100%;height:100%}
+
+/* Dark overlay gradient so text reads cleanly */
+.hero-overlay{
+  position:absolute;inset:0;z-index:2;
+  background:
+    linear-gradient(to right, rgba(18,12,6,0.72) 0%, rgba(18,12,6,0.38) 45%, rgba(18,12,6,0.10) 100%),
+    linear-gradient(to top, rgba(18,12,6,0.55) 0%, transparent 40%);
+}
+
+/* Hero text overlay */
+.hero-text{
+  position:absolute;z-index:3;
+  left:3.5rem;bottom:5rem;
+  max-width:640px;
+}
+.hero-eyebrow{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,190,140,0.85);margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;opacity:0;animation:revUp .9s .3s cubic-bezier(.16,1,.3,1) forwards}
+.eyebrow-line{width:20px;height:1px;background:rgba(255,190,140,0.7)}
+.hero-strapline{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(3rem,5.5vw,5.8rem);
+  font-weight:300;font-style:italic;
+  color:#fff;line-height:1.02;
+  letter-spacing:-.02em;
+  text-shadow:0 2px 32px rgba(0,0,0,0.35);
+  opacity:0;animation:revUp .9s .5s cubic-bezier(.16,1,.3,1) forwards;
+  margin-bottom:1.4rem;
+}
+.hero-strapline strong{font-weight:600;font-style:normal;color:rgba(255,220,190,0.95)}
+.hero-sub-line{
+  font-size:.88rem;font-weight:300;letter-spacing:.05em;
+  color:rgba(255,255,255,0.58);line-height:1.7;
+  opacity:0;animation:revUp .9s .7s cubic-bezier(.16,1,.3,1) forwards;
+  margin-bottom:2rem;max-width:440px;
+}
+.hero-ctas{display:flex;gap:.9rem;opacity:0;animation:revUp .9s .9s cubic-bezier(.16,1,.3,1) forwards}
+.btn-hero-p{background:var(--terra);color:#fff;padding:.85rem 2rem;border-radius:2rem;border:none;font-family:'Outfit',sans-serif;font-size:.8rem;letter-spacing:.06em;cursor:none;transition:all .25s}
+.btn-hero-p:hover{background:#fff;color:var(--bark);transform:translateY(-2px)}
+.btn-hero-o{background:rgba(255,255,255,0.1);color:#fff;padding:.85rem 2rem;border-radius:2rem;border:1px solid rgba(255,255,255,0.3);font-family:'Outfit',sans-serif;font-size:.8rem;letter-spacing:.06em;cursor:none;transition:all .25s;backdrop-filter:blur(8px)}
+.btn-hero-o:hover{background:rgba(255,255,255,0.22)}
+
+/* Floating location pill */
+.hero-pill{
+  position:absolute;z-index:3;right:3.5rem;bottom:5rem;
+  background:rgba(245,240,232,0.1);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.18);border-radius:1rem;
+  padding:1rem 1.3rem;text-align:right;
+  opacity:0;animation:revUp .9s 1.1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:#6fcf97;display:inline-block;margin-right:.4rem;animation:pulse 2s infinite}
+.pill-label{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:.35rem}
+.pill-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:1rem;color:#fff;line-height:1.35}
+.pill-url{font-size:.62rem;color:rgba(255,255,255,0.3);margin-top:.25rem;letter-spacing:.06em}
+
+/* Scroll hint */
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.4rem;opacity:0;animation:revUp .8s 1.4s forwards}
+.scroll-line{width:1px;height:36px;background:rgba(255,255,255,0.25);animation:scrollPulse 2s ease-in-out infinite}
+.scroll-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
+
+/* Animations */
+@keyframes revUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.3}}
+@keyframes scrollPulse{0%,100%{opacity:.25;transform:scaleY(1)}50%{opacity:.6;transform:scaleY(1.1)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Float animations for SVG elements */
+@keyframes fl1{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fl2{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes fl3{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes fl4{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes scanLine{0%{transform:translateY(0);opacity:.7}60%{opacity:.2}100%{transform:translateY(130px);opacity:0}}
+@keyframes steam{0%{transform:translateY(0);opacity:.55}100%{transform:translateY(-22px);opacity:0}}
+@keyframes o2Rise{0%,100%{transform:translateY(0) scale(1);opacity:.8}50%{transform:translateY(-8px) scale(1.08);opacity:.4}}
+@keyframes hypGlow{0%,100%{opacity:.12}50%{opacity:.28}}
+@keyframes redGlow{0%,100%{opacity:.18}50%{opacity:.42}}
+@keyframes leafSway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(4deg)}}
+
+.fl1{animation:fl1 5.5s ease-in-out infinite}
+.fl2{animation:fl2 7s ease-in-out .8s infinite}
+.fl3{animation:fl3 6s ease-in-out .4s infinite}
+.fl4{animation:fl4 8s ease-in-out 1.2s infinite}
+
+/* ── BELOW FOLD ── */
+.ticker-bar{background:var(--bark);padding:.75rem 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;animation:ticker 32s linear infinite}
+.t-item{display:inline-flex;align-items:center;gap:.9rem;padding:0 2rem;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,0.45)}
+.t-dot{width:3px;height:3px;border-radius:50%;background:var(--terra);flex-shrink:0}
+
+.section{padding:5.5rem 3.5rem}
+.section-lbl{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--terra);margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem}
+.section-lbl::before{content:'';width:14px;height:1px;background:var(--terra);flex-shrink:0}
+.sec-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.2rem,3.8vw,3.5rem);line-height:1.05;font-weight:600;color:var(--bark);margin-bottom:1.4rem;letter-spacing:-.02em}
+.sec-title em{color:var(--terra);font-style:italic;font-weight:400}
+.body-t{font-size:.88rem;line-height:1.88;color:var(--bark);opacity:.52;font-weight:300;margin-bottom:.85rem}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bark20);border:1px solid var(--bark20);border-radius:1rem;overflow:hidden}
+.stat{background:var(--cream);padding:1.4rem 1.2rem}
+.stat-n{font-family:'Cormorant Garamond',Georgia,serif;font-size:2.5rem;font-weight:600;color:var(--bark);line-height:1}
+.stat-n span{color:var(--terra)}
+.stat-l{font-size:.68rem;letter-spacing:.04em;color:var(--bark);opacity:.35;margin-top:.2rem}
+.city-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.6rem}
+.city-tag{padding:.42rem .95rem;border-radius:2rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--bark20);color:var(--bark);opacity:.36;cursor:default}
+.city-tag.active{background:var(--bark);color:var(--cream);opacity:1;border-color:var(--bark)}
+
+.svc-outer{background:var(--warm);border-radius:2rem;margin:0 1.5rem;padding:4rem 3rem}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(30,22,13,.06);border:1px solid rgba(30,22,13,.06);border-radius:1.1rem;overflow:hidden;margin-top:2.6rem}
+.svc-c{background:var(--warm);padding:1.9rem 1.5rem;position:relative;overflow:hidden;transition:background .25s}
+.svc-c::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.svc-c:hover{background:rgba(230,220,206,.7)}
+.svc-c:hover::after{transform:scaleX(1)}
+.svc-icon{width:40px;height:40px;border-radius:.7rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-size:1rem}
+.ic-r{background:rgba(191,85,48,.1)}.ic-g{background:rgba(58,88,40,.1)}.ic-o{background:rgba(168,130,90,.12)}.ic-s{background:rgba(107,154,90,.12)}
+.svc-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--bark);margin-bottom:.45rem;line-height:1.2}
+.svc-desc{font-size:.78rem;line-height:1.7;color:var(--bark);opacity:.46;font-weight:300}
+
+.philo{background:var(--bark);color:#fff;padding:5rem 3.5rem;text-align:center;position:relative;overflow:hidden}
+.philo::before{content:'MÖKKI';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:20vw;font-weight:600;color:rgba(255,255,255,.025);pointer-events:none;white-space:nowrap}
+.philo-q{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.9rem,3.8vw,3.8rem);font-weight:300;font-style:italic;line-height:1.15;margin-bottom:1.3rem;position:relative}
+.philo-s{font-size:.85rem;line-height:1.9;opacity:.4;max-width:540px;margin:0 auto 2rem;font-weight:300}
+.philo-btn{background:var(--terra);color:#fff;padding:.85rem 2.1rem;border-radius:2rem;border:none;font-family:'Outfit',sans-serif;font-size:.8rem;letter-spacing:.06em;cursor:none;transition:all .25s}
+.philo-btn:hover{background:#fff;color:var(--bark)}
+
+footer{background:var(--bark);color:#fff;padding:2.3rem 3.5rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.05)}
+.foot-logo{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.4rem;font-weight:600}
+.foot-logo span{color:rgba(255,190,150,.9);font-style:italic}
+.foot-n{font-size:.67rem;opacity:.26;letter-spacing:.05em}
+.foot-cta{background:transparent;color:#fff;padding:.52rem 1.35rem;border-radius:2rem;border:1px solid rgba(255,255,255,.16);font-family:'Outfit',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s}
+.foot-cta:hover{background:var(--terra);border-color:var(--terra)}
+
+/* POPUP */
+.overlay{position:fixed;inset:0;background:rgba(15,9,4,.68);z-index:800;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .35s}
+.overlay.open{opacity:1;pointer-events:all}
+.popup{background:var(--cream);border-radius:1.8rem;padding:2.5rem;max-width:440px;width:92%;position:relative;transform:translateY(24px) scale(.97);transition:transform .4s cubic-bezier(.16,1,.3,1);max-height:88vh;overflow-y:auto}
+.overlay.open .popup{transform:translateY(0) scale(1)}
+.close-btn{position:absolute;top:1.2rem;right:1.4rem;background:var(--warm);border:none;width:27px;height:27px;border-radius:50%;cursor:none;font-size:.7rem;color:var(--bark);opacity:.4;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+.close-btn:hover{opacity:1}
+.pdots{display:flex;gap:.32rem;margin-bottom:1.4rem}
+.pd{width:5px;height:5px;border-radius:50%;background:var(--bark20);transition:background .3s}
+.pd.on{background:var(--terra)}
+.p-brand{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.2rem;font-weight:600;color:var(--bark);margin-bottom:.12rem}
+.p-brand span{color:var(--terra);font-style:italic}
+.p-loc{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:1.2rem}
+.p-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.85rem;font-weight:600;color:var(--bark);line-height:1.08;margin-bottom:.45rem}
+.p-sub{font-size:.8rem;line-height:1.7;color:var(--bark);opacity:.46;margin-bottom:1.4rem;font-weight:300}
+.step{display:none}.step.on{display:block}
+.field{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.75rem}
+.field label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--bark);opacity:.36}
+.field input,.field textarea{background:var(--warm);border:1px solid transparent;border-radius:.62rem;padding:.68rem .9rem;font-family:'Outfit',sans-serif;font-size:.86rem;color:var(--bark);outline:none;transition:border-color .2s;resize:none}
+.field input:focus,.field textarea:focus{border-color:var(--terra)}
+.field input::placeholder,.field textarea::placeholder{opacity:.3}
+.field textarea{height:68px}
+.sub-btn{width:100%;background:var(--terra);color:#fff;border:none;padding:.88rem;border-radius:2rem;font-family:'Outfit',sans-serif;font-size:.83rem;letter-spacing:.05em;cursor:none;margin-top:.25rem;transition:background .2s}
+.sub-btn:hover{background:var(--bark)}
+.fn{font-size:.62rem;color:var(--bark);opacity:.26;text-align:center;margin-top:.4rem}
+.q-block{margin-bottom:1.1rem}
+.q-lbl{font-size:.76rem;font-weight:500;color:var(--bark);margin-bottom:.45rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.3rem}
+.opt{background:var(--warm);border:1.5px solid transparent;border-radius:.58rem;padding:.52rem .6rem;font-family:'Outfit',sans-serif;font-size:.72rem;color:var(--bark);cursor:none;text-align:left;transition:all .15s;line-height:1.35}
+.opt:hover{border-color:rgba(191,85,48,.3);background:rgba(191,85,48,.07)}
+.opt.sel{border-color:var(--terra);background:rgba(191,85,48,.08);color:var(--terra)}
+.quiz-go{width:100%;background:var(--moss);color:#fff;border:none;padding:.85rem;border-radius:2rem;font-family:'Outfit',sans-serif;font-size:.82rem;cursor:none;margin-top:.45rem;transition:background .2s}
+.quiz-go:hover{background:var(--bark)}
+.ty{text-align:center;padding:.7rem .3rem}
+.ty-mark{font-size:2.5rem;display:block;margin-bottom:.8rem}
+.ty-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.85rem;font-weight:600;color:var(--bark);margin-bottom:.6rem}
+.ty-body{font-size:.8rem;line-height:1.8;color:var(--bark);opacity:.45;font-weight:300}
+.ty-div{margin:1.2rem 0;height:1px;background:var(--bark20)}
+.ty-h{font-size:.7rem;color:var(--terra);letter-spacing:.07em}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- NAV (transparent over hero) -->
+<nav>
+  <div class="nav-logo">Mökki<span>.</span></div>
+  <div class="nav-links">
+    <a href="#">About</a>
+    <a href="#">Therapies</a>
+    <a href="#">Consult</a>
+    <a href="#">Locations</a>
+    <button class="nav-cta" onclick="openPopup()">Early Access</button>
+  </div>
+</nav>
+
+<!-- ══ HERO — full bleed animated store scene ══ -->
+<section class="hero">
+
+  <!-- The full-bleed illustrated scene -->
+  <svg class="hero-scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Sky gradient – warm dusk/morning -->
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#C8B89A"/>
+        <stop offset="45%" stop-color="#D4C4A8"/>
+        <stop offset="100%" stop-color="#E8DDD0"/>
+      </linearGradient>
+      <!-- Glass panels -->
+      <linearGradient id="glassL" x1="0" y1="0" x2="0.3" y2="1">
+        <stop offset="0%" stop-color="rgba(255,252,246,0.68)"/>
+        <stop offset="100%" stop-color="rgba(235,225,210,0.52)"/>
+      </linearGradient>
+      <linearGradient id="glassR" x1="0" y1="0" x2="0.3" y2="1">
+        <stop offset="0%" stop-color="rgba(255,252,248,0.62)"/>
+        <stop offset="100%" stop-color="rgba(240,228,215,0.48)"/>
+      </linearGradient>
+      <!-- Warm interior glow -->
+      <radialGradient id="intGlow" cx="50%" cy="60%" r="55%">
+        <stop offset="0%" stop-color="rgba(255,210,150,0.35)"/>
+        <stop offset="100%" stop-color="rgba(255,210,150,0)"/>
+      </radialGradient>
+      <!-- Red light glow -->
+      <radialGradient id="redGlow" cx="50%" cy="40%" r="55%">
+        <stop offset="0%" stop-color="rgba(210,85,45,0.32)"/>
+        <stop offset="100%" stop-color="rgba(210,85,45,0)"/>
+      </radialGradient>
+      <!-- Hyperbaric glow -->
+      <radialGradient id="hypGlow" cx="50%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="rgba(60,130,100,0.25)"/>
+        <stop offset="100%" stop-color="rgba(60,130,100,0)"/>
+      </radialGradient>
+      <!-- Floor reflection -->
+      <linearGradient id="floorRef" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(200,185,160,0.18)"/>
+        <stop offset="100%" stop-color="rgba(180,165,145,0.04)"/>
+      </linearGradient>
+      <!-- Street -->
+      <linearGradient id="street" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#8A8070"/>
+        <stop offset="100%" stop-color="#6A6058"/>
+      </linearGradient>
+      <clipPath id="sceneClip">
+        <rect width="1440" height="900"/>
+      </clipPath>
+    </defs>
+
+    <g clip-path="url(#sceneClip)">
+
+    <!-- ── SKY ── -->
+    <rect width="1440" height="900" fill="url(#sky)"/>
+
+    <!-- Distant buildings (city context) -->
+    <rect x="0" y="280" width="180" height="420" fill="rgba(100,88,72,0.22)"/>
+    <rect x="20" y="320" width="140" height="380" fill="rgba(110,96,78,0.18)"/>
+    <rect x="40" y="260" width="60" height="440" fill="rgba(95,84,68,0.25)"/>
+    <rect x="1260" y="290" width="180" height="410" fill="rgba(100,88,72,0.22)"/>
+    <rect x="1280" y="340" width="130" height="360" fill="rgba(110,96,78,0.18)"/>
+    <rect x="1360" y="270" width="80" height="430" fill="rgba(95,84,68,0.25)"/>
+
+    <!-- ── UPPER FLOORS (residential above store) ── -->
+    <rect x="220" y="100" width="1000" height="260" fill="rgba(90,78,62,0.18)" stroke="rgba(60,45,28,0.12)" stroke-width="1"/>
+    <!-- Upper window grid -->
+    <rect x="260" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.22)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="370" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.28)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="480" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.2)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="590" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.32)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="700" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.24)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="810" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.2)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="920" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.28)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <rect x="1030" y="120" width="90" height="110" rx="2" fill="rgba(255,248,238,0.22)" stroke="rgba(60,45,28,0.1)" stroke-width="0.8"/>
+    <!-- 2nd floor windows -->
+    <rect x="290" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.18)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="400" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.22)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="510" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.18)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="620" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.26)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="730" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.2)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="840" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.18)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="950" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.24)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+    <rect x="1060" y="248" width="72" height="80" rx="2" fill="rgba(255,248,238,0.18)" stroke="rgba(60,45,28,0.08)" stroke-width="0.8"/>
+
+    <!-- ── SIGNAGE BAND ── -->
+    <rect x="220" y="355" width="1000" height="44" fill="#1E160D"/>
+    <text x="720" y="384" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="22" font-weight="600" fill="#F5F0E8" letter-spacing="14">MÖKKI</text>
+    <text x="1130" y="381" text-anchor="end" font-family="'Outfit',Georgia,sans-serif" font-size="9" fill="rgba(245,240,232,0.35)" letter-spacing="3">WELLNESS & LONGEVITY · GENEVA</text>
+    <circle cx="254" cy="377" r="4" fill="rgba(191,85,48,0.75)"/>
+    <circle cx="268" cy="377" r="4" fill="rgba(191,85,48,0.5)"/>
+
+    <!-- ── MAIN STOREFRONT ── -->
+    <!-- Outer frame -->
+    <rect x="220" y="399" width="1000" height="401" fill="none" stroke="#1E160D" stroke-width="3"/>
+
+    <!-- Interior ambient warm glow (shows through glass) -->
+    <rect x="221" y="400" width="998" height="399" fill="url(#intGlow)"/>
+
+    <!-- ── LEFT THIRD: HYPERBARIC OXYGEN CHAMBER ── -->
+    <!-- Glass panel left -->
+    <rect x="228" y="403" width="295" height="390" fill="url(#glassL)" stroke="rgba(30,22,13,0.12)" stroke-width="0.8"/>
+    <!-- Reflection diagonals -->
+    <line x1="258" y1="403" x2="248" y2="793" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/>
+    <line x1="300" y1="403" x2="275" y2="793" stroke="rgba(255,255,255,0.14)" stroke-width="0.7"/>
+
+    <!-- Hyperbaric glow through glass -->
+    <rect x="228" y="403" width="295" height="390" fill="url(#hypGlow)" style="animation:hypGlow 4s ease-in-out infinite" opacity="0.7"/>
+
+    <g class="fl3">
+      <!-- HBO2 Chamber — proper capsule shape -->
+      <!-- Main cylinder body -->
+      <ellipse cx="375" cy="640" rx="95" ry="38" fill="rgba(220,235,225,0.85)" stroke="rgba(58,88,40,0.5)" stroke-width="2"/>
+      <rect x="280" y="602" width="190" height="76" fill="rgba(220,235,225,0.82)" stroke="rgba(58,88,40,0.4)" stroke-width="1.5"/>
+      <!-- End caps -->
+      <ellipse cx="280" cy="640" rx="28" ry="38" fill="rgba(200,220,208,0.88)" stroke="rgba(58,88,40,0.5)" stroke-width="2"/>
+      <ellipse cx="470" cy="640" rx="28" ry="38" fill="rgba(200,220,208,0.88)" stroke="rgba(58,88,40,0.5)" stroke-width="2"/>
+      <!-- Door hatch on front end -->
+      <ellipse cx="280" cy="640" rx="20" ry="29" fill="none" stroke="rgba(58,88,40,0.6)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Porthole window on side -->
+      <ellipse cx="390" cy="617" rx="18" ry="12" fill="rgba(180,215,200,0.6)" stroke="rgba(58,88,40,0.5)" stroke-width="1.5"/>
+      <ellipse cx="390" cy="660" rx="18" ry="12" fill="rgba(180,215,200,0.6)" stroke="rgba(58,88,40,0.5)" stroke-width="1.5"/>
+      <!-- Control panel on right end -->
+      <rect x="456" y="620" width="22" height="30" rx="3" fill="rgba(58,88,40,0.35)"/>
+      <circle cx="467" cy="628" r="3" fill="rgba(100,200,140,0.8)"/>
+      <circle cx="467" cy="638" r="3" fill="rgba(245,240,232,0.6)"/>
+      <rect x="460" y="644" width="14" height="2" rx="1" fill="rgba(245,240,232,0.4)"/>
+      <rect x="460" y="648" width="10" height="2" rx="1" fill="rgba(245,240,232,0.3)"/>
+      <!-- O2 label -->
+      <text x="375" y="638" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="11" font-weight="500" fill="rgba(58,88,40,0.75)" letter-spacing="1">HYPERBARIC</text>
+      <text x="375" y="654" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="11" font-weight="500" fill="rgba(58,88,40,0.75)" letter-spacing="1">OXYGEN</text>
+
+      <!-- O2 rising bubbles -->
+      <circle cx="320" cy="595" r="5" fill="rgba(58,88,40,0.12)" style="animation:o2Rise 3.5s ease-in-out infinite"/>
+      <circle cx="345" cy="582" r="3.5" fill="rgba(58,88,40,0.1)" style="animation:o2Rise 4.5s ease-in-out .6s infinite"/>
+      <circle cx="410" cy="588" r="4.5" fill="rgba(58,88,40,0.12)" style="animation:o2Rise 4s ease-in-out 1.2s infinite"/>
+      <circle cx="440" cy="578" r="3" fill="rgba(58,88,40,0.1)" style="animation:o2Rise 5s ease-in-out .3s infinite"/>
+
+      <!-- Person lying inside (silhouette) -->
+      <ellipse cx="375" cy="640" rx="72" ry="18" fill="rgba(30,22,13,0.1)"/>
+      <circle cx="296" cy="635" r="14" fill="rgba(30,22,13,0.12)"/>
+
+      <!-- Floor stand -->
+      <rect x="305" y="678" width="40" height="8" rx="2" fill="rgba(58,88,40,0.35)"/>
+      <rect x="415" y="678" width="40" height="8" rx="2" fill="rgba(58,88,40,0.35)"/>
+      <rect x="315" y="686" width="20" height="40" rx="2" fill="rgba(58,88,40,0.25)"/>
+      <rect x="425" y="686" width="20" height="40" rx="2" fill="rgba(58,88,40,0.25)"/>
+      <!-- O2 label on stand -->
+      <text x="375" y="730" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="10" fill="rgba(58,88,40,0.5)" letter-spacing="2">O₂</text>
+    </g>
+
+    <!-- ── CENTRE MULLION ── -->
+    <rect x="521" y="399" width="52" height="401" fill="#1E160D"/>
+    <!-- Door in mullion -->
+    <rect x="529" y="560" width="36" height="240" fill="url(#glassL)" stroke="rgba(245,240,232,0.15)" stroke-width="0.5"/>
+    <rect x="552" y="680" width="3" height="24" rx="1.5" fill="rgba(168,130,90,0.85)"/>
+
+    <!-- ── RIGHT TWO-THIRDS: CAFE + RED LIGHT + PHARMACY ── -->
+    <rect x="573" y="403" width="639" height="390" fill="url(#glassR)" stroke="rgba(30,22,13,0.1)" stroke-width="0.8"/>
+    <!-- Reflections -->
+    <line x1="610" y1="403" x2="590" y2="793" stroke="rgba(255,255,255,0.24)" stroke-width="1.2"/>
+    <line x1="660" y1="403" x2="630" y2="793" stroke="rgba(255,255,255,0.12)" stroke-width="0.7"/>
+    <line x1="1170" y1="403" x2="1175" y2="793" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+    <!-- ═══ RED LIGHT THERAPY STATION (left of right panel) ═══ -->
+    <g class="fl2">
+      <!-- Red glow ambience -->
+      <rect x="573" y="403" width="280" height="390" fill="url(#redGlow)" style="animation:redGlow 3.5s ease-in-out infinite" opacity="0.8"/>
+
+      <!-- Red light panel device - floor standing unit -->
+      <rect x="650" y="460" width="70" height="180" rx="6" fill="rgba(191,85,48,0.9)"/>
+      <rect x="657" y="468" width="56" height="164" rx="3" fill="rgba(215,100,58,0.4)"/>
+
+      <!-- LED array – 5 cols x 7 rows -->
+      <circle cx="667" cy="482" r="4" fill="#FFD4AA" opacity=".95"/>
+      <circle cx="681" cy="482" r="4" fill="#FFD4AA" opacity=".95"/>
+      <circle cx="695" cy="482" r="4" fill="#FFD4AA" opacity=".95"/>
+      <circle cx="709" cy="482" r="4" fill="#FFD4AA" opacity=".95"/>
+      <circle cx="667" cy="498" r="4" fill="#FFD4AA" opacity=".9"/>
+      <circle cx="681" cy="498" r="4" fill="#FFD4AA" opacity=".9"/>
+      <circle cx="695" cy="498" r="4" fill="#FFD4AA" opacity=".9"/>
+      <circle cx="709" cy="498" r="4" fill="#FFD4AA" opacity=".9"/>
+      <circle cx="667" cy="514" r="4" fill="#FFD4AA" opacity=".85"/>
+      <circle cx="681" cy="514" r="4" fill="#FFD4AA" opacity=".85"/>
+      <circle cx="695" cy="514" r="4" fill="#FFD4AA" opacity=".85"/>
+      <circle cx="709" cy="514" r="4" fill="#FFD4AA" opacity=".85"/>
+      <circle cx="667" cy="530" r="4" fill="#FFD4AA" opacity=".78"/>
+      <circle cx="681" cy="530" r="4" fill="#FFD4AA" opacity=".78"/>
+      <circle cx="695" cy="530" r="4" fill="#FFD4AA" opacity=".78"/>
+      <circle cx="709" cy="530" r="4" fill="#FFD4AA" opacity=".78"/>
+      <circle cx="667" cy="546" r="4" fill="#FFD4AA" opacity=".68"/>
+      <circle cx="681" cy="546" r="4" fill="#FFD4AA" opacity=".68"/>
+      <circle cx="695" cy="546" r="4" fill="#FFD4AA" opacity=".68"/>
+      <circle cx="709" cy="546" r="4" fill="#FFD4AA" opacity=".68"/>
+      <circle cx="667" cy="562" r="4" fill="#FFD4AA" opacity=".55"/>
+      <circle cx="681" cy="562" r="4" fill="#FFD4AA" opacity=".55"/>
+      <circle cx="695" cy="562" r="4" fill="#FFD4AA" opacity=".55"/>
+      <circle cx="709" cy="562" r="4" fill="#FFD4AA" opacity=".55"/>
+      <circle cx="667" cy="578" r="4" fill="#FFD4AA" opacity=".42"/>
+      <circle cx="681" cy="578" r="4" fill="#FFD4AA" opacity=".42"/>
+      <circle cx="695" cy="578" r="4" fill="#FFD4AA" opacity=".42"/>
+      <circle cx="709" cy="578" r="4" fill="#FFD4AA" opacity=".42"/>
+
+      <!-- Animated scan line -->
+      <rect x="650" y="460" width="70" height="5" rx="0" fill="rgba(255,195,130,0.6)" style="animation:scanLine 3.2s ease-in-out infinite"/>
+
+      <!-- Person seated/reclining in front of panel (silhouette) -->
+      <!-- Body -->
+      <ellipse cx="610" cy="680" rx="22" ry="55" fill="rgba(30,22,13,0.14)" transform="rotate(-15 610 680)"/>
+      <!-- Head -->
+      <circle cx="600" cy="618" r="17" fill="rgba(30,22,13,0.13)"/>
+      <!-- Legs -->
+      <ellipse cx="630" cy="740" rx="12" ry="40" fill="rgba(30,22,13,0.1)" transform="rotate(10 630 740)"/>
+
+      <!-- "Red Light" label -->
+      <text x="685" y="660" text-anchor="middle" font-family="'Outfit',sans-serif" font-size="9" fill="rgba(191,85,48,0.6)" letter-spacing="2">RED LIGHT</text>
+    </g>
+
+    <!-- ═══ CAFE + PHARMACY AREA (right portion) ═══ -->
+    <g class="fl1">
+      <!-- ── PHARMACY SHELVES ── -->
+      <!-- Shelf 1 back wall -->
+      <rect x="830" y="430" width="370" height="3.5" rx="1" fill="rgba(30,22,13,0.42)"/>
+      <!-- Products on shelf 1 -->
+      <rect x="840" y="400" width="16" height="30" rx="4" fill="rgba(58,88,40,0.72)"/>
+      <rect x="860" y="405" width="13" height="25" rx="4" fill="rgba(168,130,90,0.78)"/>
+      <rect x="877" y="402" width="16" height="28" rx="4" fill="rgba(58,88,40,0.55)"/>
+      <rect x="897" y="408" width="12" height="22" rx="4" fill="rgba(191,85,48,0.58)"/>
+      <rect x="913" y="403" width="15" height="27" rx="4" fill="rgba(168,130,90,0.62)"/>
+      <rect x="932" y="404" width="16" height="26" rx="4" fill="rgba(58,88,40,0.78)"/>
+      <rect x="952" y="406" width="13" height="24" rx="4" fill="rgba(191,85,48,0.48)"/>
+      <rect x="969" y="400" width="16" height="30" rx="4" fill="rgba(168,130,90,0.65)"/>
+      <rect x="989" y="403" width="14" height="27" rx="4" fill="rgba(58,88,40,0.6)"/>
+      <rect x="1007" y="405" width="13" height="25" rx="4" fill="rgba(191,85,48,0.52)"/>
+      <rect x="1024" y="401" width="16" height="29" rx="4" fill="rgba(168,130,90,0.7)"/>
+      <rect x="1044" y="404" width="14" height="26" rx="4" fill="rgba(58,88,40,0.65)"/>
+      <rect x="1062" y="402" width="15" height="28" rx="4" fill="rgba(191,85,48,0.45)"/>
+      <rect x="1081" y="405" width="13" height="25" rx="4" fill="rgba(168,130,90,0.58)"/>
+      <rect x="1098" y="400" width="16" height="30" rx="4" fill="rgba(58,88,40,0.7)"/>
+      <rect x="1118" y="403" width="14" height="27" rx="4" fill="rgba(191,85,48,0.55)"/>
+      <rect x="1136" y="406" width="16" height="24" rx="4" fill="rgba(168,130,90,0.68)"/>
+      <rect x="1156" y="402" width="13" height="28" rx="4" fill="rgba(58,88,40,0.52)"/>
+      <!-- Shelf 2 -->
+      <rect x="830" y="490" width="370" height="3" rx="1" fill="rgba(30,22,13,0.35)"/>
+      <rect x="845" y="462" width="14" height="28" rx="4" fill="rgba(168,130,90,0.55)"/>
+      <rect x="863" y="465" width="12" height="25" rx="4" fill="rgba(58,88,40,0.6)"/>
+      <rect x="879" y="463" width="15" height="27" rx="4" fill="rgba(191,85,48,0.42)"/>
+      <rect x="898" y="466" width="13" height="24" rx="4" fill="rgba(168,130,90,0.65)"/>
+      <rect x="915" y="462" width="15" height="28" rx="4" fill="rgba(58,88,40,0.5)"/>
+      <rect x="934" y="465" width="12" height="25" rx="4" fill="rgba(191,85,48,0.48)"/>
+      <rect x="950" y="463" width="16" height="27" rx="4" fill="rgba(168,130,90,0.58)"/>
+      <rect x="970" y="465" width="13" height="25" rx="4" fill="rgba(58,88,40,0.62)"/>
+      <rect x="987" y="462" width="15" height="28" rx="4" fill="rgba(191,85,48,0.44)"/>
+
+      <!-- ── PENDANT LIGHTS ── -->
+      <line x1="880" y1="399" x2="880" y2="455" stroke="rgba(30,22,13,0.25)" stroke-width="1.2"/>
+      <ellipse cx="880" cy="459" rx="14" ry="6" fill="rgba(168,130,90,0.78)" stroke="rgba(30,22,13,0.12)" stroke-width="0.5"/>
+      <circle cx="880" cy="459" r="4" fill="rgba(255,240,200,0.5)"/>
+
+      <line x1="980" y1="399" x2="980" y2="442" stroke="rgba(30,22,13,0.25)" stroke-width="1.2"/>
+      <ellipse cx="980" cy="446" rx="14" ry="6" fill="rgba(168,130,90,0.78)" stroke="rgba(30,22,13,0.12)" stroke-width="0.5"/>
+      <circle cx="980" cy="446" r="4" fill="rgba(255,240,200,0.5)"/>
+
+      <line x1="1080" y1="399" x2="1080" y2="450" stroke="rgba(30,22,13,0.25)" stroke-width="1.2"/>
+      <ellipse cx="1080" cy="454" rx="14" ry="6" fill="rgba(168,130,90,0.78)" stroke="rgba(30,22,13,0.12)" stroke-width="0.5"/>
+      <circle cx="1080" cy="454" r="4" fill="rgba(255,240,200,0.5)"/>
+
+      <line x1="1170" y1="399" x2="1170" y2="446" stroke="rgba(30,22,13,0.25)" stroke-width="1.2"/>
+      <ellipse cx="1170" cy="450" rx="14" ry="6" fill="rgba(168,130,90,0.78)" stroke="rgba(30,22,13,0.12)" stroke-width="0.5"/>
+
+      <!-- ── COFFEE COUNTER ── -->
+      <!-- Counter surface -->
+      <rect x="750" y="690" width="450" height="10" rx="2" fill="rgba(30,22,13,0.6)"/>
+      <rect x="750" y="700" width="450" height="93" rx="0" fill="rgba(30,22,13,0.12)"/>
+      <!-- Counter front panel - dark marble look -->
+      <rect x="750" y="700" width="450" height="93" rx="0" fill="rgba(30,22,13,0.08)"/>
+
+      <!-- Espresso machine – proper La Marzocco-style -->
+      <rect x="840" y="648" width="110" height="44" rx="5" fill="rgba(30,22,13,0.82)"/>
+      <!-- Machine body detail -->
+      <rect x="846" y="654" width="98" height="32" rx="3" fill="rgba(40,30,18,0.9)"/>
+      <!-- Group heads -->
+      <rect x="855" y="668" width="18" height="14" rx="2" fill="rgba(168,130,90,0.6)"/>
+      <rect x="882" y="668" width="18" height="14" rx="2" fill="rgba(168,130,90,0.6)"/>
+      <rect x="909" y="668" width="18" height="14" rx="2" fill="rgba(168,130,90,0.6)"/>
+      <!-- Drip trays -->
+      <rect x="852" y="680" width="24" height="5" rx="1" fill="rgba(168,130,90,0.4)"/>
+      <rect x="879" y="680" width="24" height="5" rx="1" fill="rgba(168,130,90,0.4)"/>
+      <rect x="906" y="680" width="24" height="5" rx="1" fill="rgba(168,130,90,0.4)"/>
+      <!-- Pressure gauge -->
+      <circle cx="936" cy="660" r="8" fill="rgba(168,130,90,0.5)"/>
+      <circle cx="936" cy="660" r="5" fill="rgba(30,22,13,0.7)"/>
+      <line x1="936" y1="660" x2="939" y2="655" stroke="rgba(245,240,232,0.7)" stroke-width="1.2"/>
+      <!-- Steam wand -->
+      <line x1="950" y1="658" x2="960" y2="678" stroke="rgba(168,130,90,0.7)" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Steam from machine -->
+      <path d="M858 646 Q852 634 858 622" stroke="rgba(245,240,232,0.35)" stroke-width="2" fill="none" stroke-linecap="round" style="animation:steam 2.5s ease-out infinite"/>
+      <path d="M870 645 Q864 631 870 619" stroke="rgba(245,240,232,0.25)" stroke-width="1.5" fill="none" stroke-linecap="round" style="animation:steam 2.5s ease-out .8s infinite"/>
+      <path d="M882 647 Q876 633 882 621" stroke="rgba(245,240,232,0.2)" stroke-width="1.2" fill="none" stroke-linecap="round" style="animation:steam 2.5s ease-out 1.4s infinite"/>
+
+      <!-- Coffee cups on counter -->
+      <rect x="975" y="676" width="26" height="18" rx="3" fill="rgba(245,240,232,0.9)"/>
+      <rect x="975" y="690" width="26" height="3" rx="1" fill="rgba(30,22,13,0.1)"/>
+      <path d="M1001 680 Q1010 680 1010 687 Q1010 694 1001 694" stroke="rgba(245,240,232,0.75)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="1010" y="678" width="24" height="16" rx="3" fill="rgba(245,240,232,0.85)"/>
+      <path d="M1034 682 Q1042 682 1042 688 Q1042 694 1034 694" stroke="rgba(245,240,232,0.7)" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+      <!-- ── PLANTS ── -->
+      <!-- Large fiddle leaf fig, right side -->
+      <g class="fl4">
+        <rect x="1145" y="660" width="30" height="80" rx="4" fill="rgba(90,68,42,0.6)"/>
+        <rect x="1135" y="726" width="50" height="14" rx="3" fill="rgba(90,68,42,0.5)"/>
+        <!-- Leaves -->
+        <ellipse cx="1160" cy="640" rx="28" ry="22" fill="rgba(50,82,36,0.78)" transform="rotate(-15 1160 640)" style="animation:leafSway 5s ease-in-out infinite"/>
+        <ellipse cx="1180" cy="620" rx="24" ry="18" fill="rgba(58,92,40,0.72)" transform="rotate(10 1180 620)" style="animation:leafSway 5s ease-in-out .5s infinite"/>
+        <ellipse cx="1148" cy="608" rx="22" ry="16" fill="rgba(45,75,32,0.8)" transform="rotate(-25 1148 608)" style="animation:leafSway 5s ease-in-out 1s infinite"/>
+        <ellipse cx="1175" cy="590" rx="20" ry="15" fill="rgba(55,85,38,0.7)" transform="rotate(20 1175 590)" style="animation:leafSway 5s ease-in-out 1.5s infinite"/>
+        <ellipse cx="1152" cy="575" rx="18" ry="14" fill="rgba(48,78,34,0.75)" transform="rotate(-10 1152 575)" style="animation:leafSway 5s ease-in-out 2s infinite"/>
+        <!-- Leaf veins -->
+        <line x1="1160" y1="650" x2="1160" y2="628" stroke="rgba(38,62,28,0.4)" stroke-width="1"/>
+        <line x1="1180" y1="628" x2="1178" y2="608" stroke="rgba(38,62,28,0.35)" stroke-width="1"/>
+      </g>
+
+      <!-- Small potted herbs on counter -->
+      <rect x="1050" y="668" width="20" height="24" rx="3" fill="rgba(168,130,90,0.55)"/>
+      <ellipse cx="1060" cy="668" rx="14" ry="8" fill="rgba(50,82,36,0.65)"/>
+      <path d="M1060 668 Q1066 656 1070 646" stroke="rgba(58,88,40,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M1060 665 Q1054 654 1050 644" stroke="rgba(50,78,34,0.6)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="1071" cy="644" rx="7" ry="5" fill="rgba(90,140,65,0.65)" transform="rotate(-15 1071 644)"/>
+      <ellipse cx="1049" cy="643" rx="7" ry="5" fill="rgba(80,130,58,0.6)" transform="rotate(15 1049 643)"/>
+
+      <!-- Hanging plants from ceiling -->
+      <line x1="770" y1="399" x2="770" y2="480" stroke="rgba(90,68,42,0.3)" stroke-width="1.2"/>
+      <circle cx="770" cy="484" r="12" fill="rgba(90,68,42,0.5)"/>
+      <path d="M770 484 Q758 474 748 462" stroke="rgba(58,88,40,0.6)" stroke-width="1.5" fill="none"/>
+      <path d="M770 484 Q782 472 792 458" stroke="rgba(58,88,40,0.6)" stroke-width="1.5" fill="none"/>
+      <path d="M770 484 Q762 468 755 450" stroke="rgba(50,78,34,0.5)" stroke-width="1.2" fill="none"/>
+      <path d="M770 484 Q778 466 785 448" stroke="rgba(50,78,34,0.5)" stroke-width="1.2" fill="none"/>
+      <ellipse cx="748" cy="460" rx="9" ry="6" fill="rgba(80,130,58,0.6)" transform="rotate(-20 748 460)"/>
+      <ellipse cx="792" cy="456" rx="9" ry="6" fill="rgba(80,130,58,0.6)" transform="rotate(20 792 456)"/>
+      <ellipse cx="754" cy="449" rx="8" ry="5" fill="rgba(70,115,50,0.55)" transform="rotate(-35 754 449)"/>
+      <ellipse cx="786" cy="447" rx="8" ry="5" fill="rgba(70,115,50,0.55)" transform="rotate(30 786 447)"/>
+    </g>
+
+    <!-- ── BARISTA SILHOUETTE ── -->
+    <g opacity="0.22" class="fl1">
+      <!-- Body -->
+      <rect x="1000" y="595" width="35" height="95" rx="14" fill="#1E160D"/>
+      <!-- Head -->
+      <circle cx="1017" cy="578" r="20" fill="#1E160D"/>
+      <!-- Arm reaching forward -->
+      <rect x="995" y="630" width="50" height="12" rx="6" fill="#1E160D" transform="rotate(-18 995 630)"/>
+    </g>
+
+    <!-- ── CUSTOMER SILHOUETTES (outside / at window) ── -->
+    <!-- Person 1 – outside looking in -->
+    <g opacity="0.18">
+      <circle cx="130" cy="670" r="22" fill="#1E160D"/>
+      <rect x="112" y="690" width="36" height="80" rx="14" fill="#1E160D"/>
+    </g>
+    <!-- Person 2 – outside, side profile -->
+    <g opacity="0.14">
+      <circle cx="1340" cy="660" r="20" fill="#1E160D"/>
+      <rect x="1323" y="678" width="34" height="74" rx="13" fill="#1E160D"/>
+    </g>
+    <!-- Person 3 – couple outside -->
+    <g opacity="0.12">
+      <circle cx="70" cy="700" r="18" fill="#1E160D"/>
+      <rect x="54" y="716" width="32" height="68" rx="12" fill="#1E160D"/>
+      <circle cx="108" cy="695" r="16" fill="#1E160D"/>
+      <rect x="93" y="710" width="30" height="62" rx="11" fill="#1E160D"/>
+    </g>
+    <!-- Person 4 – far right -->
+    <g opacity="0.15">
+      <circle cx="1400" cy="680" r="19" fill="#1E160D"/>
+      <rect x="1383" y="697" width="34" height="72" rx="13" fill="#1E160D"/>
+    </g>
+
+    <!-- ── STREET + PAVEMENT ── -->
+    <rect x="0" y="800" width="1440" height="100" fill="url(#street)"/>
+    <rect x="0" y="796" width="1440" height="8" fill="#1E160D"/>
+    <!-- Pavement -->
+    <rect x="0" y="804" width="1440" height="15" fill="rgba(148,135,118,0.6)"/>
+    <!-- Street lines -->
+    <line x1="0" y1="850" x2="1440" y2="850" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+    <!-- A-BOARD -->
+    <g class="fl3">
+      <path d="M190 800 L168 890" stroke="rgba(30,22,13,0.45)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M190 800 L212 890" stroke="rgba(30,22,13,0.45)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M174 866 L208 866" stroke="rgba(30,22,13,0.35)" stroke-width="1.5" fill="none"/>
+      <rect x="168" y="814" width="44" height="56" rx="3" fill="rgba(245,240,232,0.95)" stroke="rgba(30,22,13,0.1)" stroke-width="0.8"/>
+      <text x="190" y="832" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-size="10" font-weight="600" fill="#1E160D">MÖKKI</text>
+      <text x="190" y="846" text-anchor="middle" font-family="'Outfit',Georgia,sans-serif" font-size="7" fill="rgba(30,22,13,0.45)" letter-spacing="0.5">Wellness &amp; Longevity</text>
+      <text x="190" y="858" text-anchor="middle" font-family="'Outfit',Georgia,sans-serif" font-size="7" fill="rgba(191,85,48,0.85)" letter-spacing="0.5">Opening Soon</text>
+    </g>
+
+    <!-- Reflection on floor (inside) -->
+    <rect x="221" y="760" width="998" height="40" fill="url(#floorRef)"/>
+
+    </g><!-- /clip -->
+  </svg>
+
+  <!-- Dark overlay for readability -->
+  <div class="hero-overlay"></div>
+
+  <!-- Text overlay -->
+  <div class="hero-text">
+    <div class="hero-eyebrow"><span class="eyebrow-line"></span>Opening in Champel · Geneva</div>
+    <h1 class="hero-strapline">Live well.<br><strong>You've earned<br>every year.</strong></h1>
+    <p class="hero-sub-line">A modern wellness studio where cutting-edge therapies meet genuine human care — and the coffee is excellent.</p>
+    <div class="hero-ctas">
+      <button class="btn-hero-p" onclick="openPopup()">Join the Waitlist</button>
+      <button class="btn-hero-o">Discover Mökki</button>
+    </div>
+  </div>
+
+  <!-- Location pill -->
+  <div class="hero-pill">
+    <div class="pill-label"><span class="pill-dot"></span>Opening Soon</div>
+    <div class="pill-val">Champel,<br>Geneva</div>
+    <div class="pill-url">mokkiswitzerland.com</div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <div class="scroll-label">Scroll</div>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner" id="tickerEl"></div>
+</div>
+
+<!-- ABOUT -->
+<section class="section">
+  <div class="split">
+    <div>
+      <div class="section-lbl">Our Philosophy</div>
+      <h2 class="sec-title">A new kind of<br><em>health space.</em></h2>
+      <p class="body-t">Not a clinic, not a spa. Mökki is where modern science and human warmth share the same roof — with an excellent flat white on the side.</p>
+      <p class="body-t">Our longevity specialists take real time to understand you as a whole. Then they build a plan that fits your life — whether that's a hyperbaric oxygen session, red light protocol, or just a proper conversation about where you want to be in ten years.</p>
+      <div class="city-tags">
+        <div class="city-tag active">Geneva</div>
+        <div class="city-tag">Zurich</div>
+        <div class="city-tag">Zermatt</div>
+        <div class="city-tag">London</div>
+      </div>
+    </div>
+    <div>
+      <div class="stats-grid">
+        <div class="stat"><div class="stat-n">1<span>:1</span></div><div class="stat-l">Every consultation, personal</div></div>
+        <div class="stat"><div class="stat-n">4<span>+</span></div><div class="stat-l">Therapies under one roof</div></div>
+        <div class="stat"><div class="stat-n" style="font-size:1.85rem">Holistic</div><div class="stat-l">Whole-person approach</div></div>
+        <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Commitment to your longevity</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div style="padding:0 1.5rem 5.5rem">
+  <div class="svc-outer">
+    <div class="section-lbl">What We Offer</div>
+    <h2 class="sec-title" style="max-width:460px">Everything you need,<br><em>in one place.</em></h2>
+    <div class="svc-grid">
+      <div class="svc-c"><div class="svc-icon ic-r">🔴</div><div class="svc-name">Red Light Therapy</div><p class="svc-desc">Photobiomodulation for cellular energy, skin health, and deep tissue recovery.</p></div>
+      <div class="svc-c"><div class="svc-icon ic-g">🫁</div><div class="svc-name">Hyperbaric Oxygen</div><p class="svc-desc">Pressurised oxygen chambers to accelerate healing, reduce inflammation, and sharpen cognition.</p></div>
+      <div class="svc-c"><div class="svc-icon ic-o">☕</div><div class="svc-name">Café & Natural Pharmacy</div><p class="svc-desc">Speciality coffee, curated supplements, and natural wellness products — beautifully presented.</p></div>
+      <div class="svc-c"><div class="svc-icon ic-s">🩺</div><div class="svc-name">Expert Consultations</div><p class="svc-desc">1:1 sessions with longevity doctors who take a truly holistic view of your health.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<div class="philo">
+  <p class="philo-q">"The second half<br>can be the best half."</p>
+  <p class="philo-s">We believe your forties, fifties, sixties — and beyond — should be lived with energy, clarity, and real vitality. Mökki exists to make that possible, one conversation at a time.</p>
+  <button class="philo-btn" onclick="openPopup()">Be Part of It →</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-logo">Mökki<span>.</span></div>
+    <div class="foot-n" style="margin-top:.3rem">Geneva · Zurich · Zermatt · London</div>
+  </div>
+  <div style="text-align:center">
+    <div class="foot-n">mokkiswitzerland.com</div>
+    <div class="foot-n" style="margin-top:.18rem">© 2025 Mökki Wellness. All rights reserved.</div>
+  </div>
+  <button class="foot-cta" onclick="openPopup()">Join Waitlist</button>
+</footer>
+
+<!-- POPUP -->
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <button class="close-btn" onclick="closePopup()">✕</button>
+    <div class="step on" id="s1">
+      <div class="pdots"><div class="pd on"></div><div class="pd"></div><div class="pd"></div></div>
+      <div class="p-brand">Mökki<span>.</span></div>
+      <div class="p-loc">Coming Soon · Champel, Geneva · mokkiswitzerland.com</div>
+      <h2 class="p-title">Be first<br>through the doors.</h2>
+      <p class="p-sub">Leave your details and we'll keep you in the loop. No noise, just news that matters.</p>
+      <div class="field"><label>Your name</label><input type="text" id="iN" placeholder="Sophie Müller"></div>
+      <div class="field"><label>Email address</label><input type="email" id="iE" placeholder="you@example.com"></div>
+      <div class="field"><label>Anything on your mind? (optional)</label><textarea id="iC" placeholder="Questions, requests, thoughts..."></textarea></div>
+      <button class="sub-btn" onclick="toS2()">Continue →</button>
+      <p class="fn">No spam. Unsubscribe anytime.</p>
+    </div>
+    <div class="step" id="s2">
+      <div class="pdots"><div class="pd on"></div><div class="pd on"></div><div class="pd"></div></div>
+      <h2 class="p-title" style="font-size:1.7rem">Help us shape<br>your Mökki.</h2>
+      <p class="p-sub">Three quick questions so we can tailor things for you from day one.</p>
+      <div class="q-block">
+        <p class="q-lbl">1. What are you most interested in?</p>
+        <div class="opts" id="q1">
+          <button class="opt" onclick="pick(this,'q1')">General wellness</button>
+          <button class="opt" onclick="pick(this,'q1')">Red light therapy</button>
+          <button class="opt" onclick="pick(this,'q1')">Personalised consults</button>
+          <button class="opt" onclick="pick(this,'q1')">Hyperbaric oxygen</button>
+          <button class="opt" onclick="pick(this,'q1')">Natural pharmacy</button>
+          <button class="opt" onclick="pick(this,'q1')">Not sure yet</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="q-lbl">2. What's your main health goal right now?</p>
+        <div class="opts" id="q2">
+          <button class="opt" onclick="pick(this,'q2')">More energy & vitality</button>
+          <button class="opt" onclick="pick(this,'q2')">Better sleep</button>
+          <button class="opt" onclick="pick(this,'q2')">Managing a condition</button>
+          <button class="opt" onclick="pick(this,'q2')">Longevity & prevention</button>
+          <button class="opt" onclick="pick(this,'q2')">Mental clarity & focus</button>
+          <button class="opt" onclick="pick(this,'q2')">Weight & body composition</button>
+        </div>
+      </div>
+      <div class="q-block">
+        <p class="q-lbl">3. How do you like to approach your health?</p>
+        <div class="opts" id="q3">
+          <button class="opt" onclick="pick(this,'q3')">Guided by experts</button>
+          <button class="opt" onclick="pick(this,'q3')">Self-directed, with support</button>
+          <button class="opt" onclick="pick(this,'q3')">Just starting my journey</button>
+          <button class="opt" onclick="pick(this,'q3')">I know what I need</button>
+        </div>
+      </div>
+      <button class="quiz-go" onclick="toS3()">Submit & Reserve My Spot →</button>
+    </div>
+    <div class="step" id="s3">
+      <div class="pdots"><div class="pd on"></div><div class="pd on"></div><div class="pd on"></div></div>
+      <div class="ty">
+        <span class="ty-mark">🌿</span>
+        <h3 class="ty-title">You're on the list.</h3>
+        <p class="ty-body">Welcome to the Mökki community. We'll be in touch as we count down to opening day in Geneva. Something special is coming.</p>
+        <div class="ty-div"></div>
+        <p class="ty-h">@mokkiswitzerland &nbsp;·&nbsp; mokkiswitzerland.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('button,a').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='48px';ring.style.height='48px';ring.style.opacity='.22'});
+  el.addEventListener('mouseleave',()=>{ring.style.width='34px';ring.style.height='34px';ring.style.opacity='.5'});
+});
+
+// Ticker
+const tI=['Hyperbaric Oxygen Chambers','Red Light Therapy','Longevity Consultations','Natural Pharmacy','Speciality Coffee','Holistic Wellness Plans','Opening in Champel, Geneva','mokkiswitzerland.com'];
+const tEl=document.getElementById('tickerEl');
+const tH=tI.map(t=>`<div class="t-item"><div class="t-dot"></div><span>${t}</span></div>`).join('');
+tEl.innerHTML=tH+tH;
+
+// Popup
+function openPopup(){document.getElementById('overlay').classList.add('open')}
+function closePopup(){document.getElementById('overlay').classList.remove('open')}
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closePopup()});
+setTimeout(openPopup,2400);
+
+// Form
+const ans={q1:'',q2:'',q3:''};
+function showStep(id){document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
+function toS2(){
+  const em=document.getElementById('iE').value.trim();
+  if(!em||!em.includes('@')){const el=document.getElementById('iE');el.style.borderColor='#BF5530';el.focus();return}
+  showStep('s2');
+}
+function toS3(){
+  const data={name:document.getElementById('iN').value,email:document.getElementById('iE').value,comment:document.getElementById('iC').value,q1:ans.q1||'—',q2:ans.q2||'—',q3:ans.q3||'—',source:'mokkiswitzerland.com',ts:new Date().toISOString()};
+  console.log('Mökki signup →',JSON.stringify(data,null,2));
+  showStep('s3');
+}
+function pick(btn,q){
+  document.querySelectorAll('#'+q+' .opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');ans[q]=btn.textContent;
+}
+</script>
+</body>
+</html>
