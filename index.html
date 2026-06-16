@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mökki — Live Better Longer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sage: #8A9B7A;
+  --sage-light: #C4CEB9;
+  --sage-dark: #4A5E3A;
+  --cream: #F5F1EB;
+  --cream-dark: #EDE7DC;
+  --earth: #8C6D52;
+  --earth-light: #C4A882;
+  --charcoal: #2C2C2A;
+  --charcoal-soft: #4A4A46;
+  --warm-white: #FAFAF7;
+  --mist: #E8EDE4;
+  --rust: #9B5E3A;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --nav-h: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--warm-white);
+  color: var(--charcoal);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+}
+nav.scrolled {
+  background: rgba(250,250,247,0.96);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(44,44,42,0.08);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.95);
+  text-decoration: none;
+}
+.nav-logo span { color: rgba(255,255,255,0.7); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+nav.scrolled .nav-logo { color: var(--charcoal); }
+nav.scrolled .nav-logo span { color: var(--sage); }
+nav.scrolled .nav-links a { color: var(--charcoal-soft); }
+nav.scrolled .nav-links a:hover { color: var(--sage-dark); }
+.nav-cta {
+  background: var(--sage-dark) !important;
+  color: var(--warm-white) !important;
+  padding: 10px 22px !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.06em !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--sage) !important; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--charcoal);
+  transition: all 0.3s;
+}
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--cream);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-scene {
+  width: 100%;
+  height: 100%;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 160px 40px 100px;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-bottom: 28px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--earth);
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(54px, 7vw, 88px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--charcoal);
+  margin-bottom: 32px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--sage-dark);
+}
+.hero-sub {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  max-width: 500px;
+  line-height: 1.75;
+  margin-bottom: 48px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--sage-dark);
+  color: var(--warm-white);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--sage); transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-block;
+  background: transparent;
+  color: var(--charcoal);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 15px 32px;
+  border-radius: 2px;
+  border: 1px solid rgba(44,44,42,0.25);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--sage-dark); color: var(--sage-dark); }
+
+.hero-stats {
+  position: absolute;
+  bottom: 60px;
+  right: 60px;
+  z-index: 2;
+  display: flex;
+  gap: 48px;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--charcoal);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-top: 6px;
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--sage-dark);
+  overflow: hidden;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+.ticker-track {
+  display: flex;
+  animation: ticker 32s linear infinite;
+  white-space: nowrap;
+}
+.ticker-track span {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  padding: 0 32px;
+}
+.ticker-track span::after {
+  content: '·';
+  margin-left: 32px;
+  color: var(--sage);
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── SECTIONS ── */
+section { padding: 120px 40px; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--earth);
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--charcoal);
+  margin-bottom: 24px;
+}
+.section-title em { font-style: italic; color: var(--sage-dark); }
+.section-body {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  max-width: 560px;
+  line-height: 1.8;
+}
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: var(--cream);
+  padding: 120px 40px;
+}
+.about-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-visual {
+  position: relative;
+}
+.about-portrait-wrap {
+  position: relative;
+  display: inline-block;
+}
+.about-portrait-bg {
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 3/4;
+  background: var(--cream-dark);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.about-portrait-svg {
+  width: 100%;
+  height: 100%;
+}
+.about-badge {
+  position: absolute;
+  bottom: -24px;
+  right: -24px;
+  background: var(--sage-dark);
+  color: var(--warm-white);
+  padding: 24px 28px;
+  border-radius: 2px;
+}
+.about-badge-num {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+}
+.about-badge-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+.about-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+.credential-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--sage-dark);
+  background: var(--mist);
+  padding: 8px 16px;
+  border-radius: 2px;
+}
+.credential-pill::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+/* ── SERVICES ── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2px;
+  background: rgba(44,44,42,0.08);
+  margin-top: 60px;
+}
+.service-card {
+  background: var(--warm-white);
+  padding: 48px 40px;
+  transition: background 0.3s;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  width: 100%;
+}
+.service-card:hover { background: var(--cream); }
+.service-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
+}
+.service-name {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.service-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.service-link {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--earth);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.service-link::after { content: '→'; transition: transform 0.2s; }
+.service-card:hover .service-link::after { transform: translateX(4px); }
+
+/* ── PHILOSOPHY BAND ── */
+.philosophy-band {
+  background: var(--charcoal);
+  padding: 120px 40px;
+  text-align: center;
+}
+.philosophy-quote {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 50px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream-dark);
+  max-width: 800px;
+  margin: 0 auto 32px;
+  line-height: 1.3;
+}
+.philosophy-attr {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+/* ── SPACE ── */
+.space-section { background: var(--cream); }
+.space-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.space-features {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 40px;
+}
+.space-feature {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.space-feature-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--sage-light);
+  line-height: 1;
+  min-width: 36px;
+}
+.space-feature-text h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--charcoal);
+  margin-bottom: 6px;
+}
+.space-feature-text p {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  line-height: 1.7;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials-wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2px;
+  background: rgba(44,44,42,0.06);
+  margin-top: 60px;
+}
+.testimonial-card {
+  background: var(--warm-white);
+  padding: 48px 40px;
+}
+.testimonial-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+.star { color: var(--earth-light); font-size: 14px; }
+.testimonial-text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--charcoal);
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+.testimonial-author {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--earth);
+}
+.testimonial-role {
+  font-size: 12px;
+  color: var(--charcoal-soft);
+  margin-top: 2px;
+}
+
+/* ── FAQ ── */
+.faq-wrap {
+  max-width: 720px;
+  margin: 60px auto 0;
+}
+.faq-item {
+  border-bottom: 1px solid rgba(44,44,42,0.1);
+}
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--charcoal);
+  text-align: left;
+  gap: 20px;
+}
+.faq-q span { font-size: 20px; transition: transform 0.3s; color: var(--sage-dark); }
+.faq-item.open .faq-q span { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  line-height: 1.8;
+}
+.faq-a-inner { padding-bottom: 24px; }
+.faq-item.open .faq-a { max-height: 300px; }
+
+/* ── BOOKING SECTION ── */
+.booking-section { background: var(--mist); }
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.booking-types {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.booking-type {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--warm-white);
+  border-radius: 2px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.booking-type.selected { border-color: var(--sage-dark); }
+.booking-type-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--mist);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.booking-type-info h4 { font-size: 15px; font-weight: 500; color: var(--charcoal); }
+.booking-type-info p { font-size: 13px; color: var(--charcoal-soft); }
+
+.form-group {
+  margin-bottom: 20px;
+}
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--charcoal-soft);
+  margin-bottom: 8px;
+}
+.form-control {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--warm-white);
+  border: 1px solid rgba(44,44,42,0.15);
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-control:focus { border-color: var(--sage-dark); }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.submit-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--sage-dark);
+  color: var(--warm-white);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+.submit-btn:hover { background: var(--sage); }
+
+/* ── INFO PAGES ── */
+.info-hero {
+  padding: 160px 40px 80px;
+  background: var(--cream);
+}
+.info-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+.info-content h2 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--charcoal);
+  margin: 48px 0 16px;
+}
+.info-content h2:first-child { margin-top: 0; }
+.info-content p {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  line-height: 1.85;
+  margin-bottom: 20px;
+}
+.info-highlight {
+  background: var(--mist);
+  border-left: 3px solid var(--sage);
+  padding: 24px 32px;
+  border-radius: 0 2px 2px 0;
+  margin: 32px 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  color: var(--charcoal);
+  line-height: 1.5;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 32px 0;
+}
+.info-point {
+  background: var(--cream);
+  padding: 24px;
+  border-radius: 2px;
+}
+.info-point h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sage-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.info-point p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ── CONTACT ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 40px;
+}
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.contact-item-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--earth);
+}
+.contact-item-value {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+.contact-map-mock {
+  background: var(--cream-dark);
+  border-radius: 2px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  margin-top: 32px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--charcoal);
+  padding: 80px 40px 48px;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.footer-brand-name {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--cream-dark);
+  margin-bottom: 16px;
+}
+.footer-tagline {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  max-width: 280px;
+}
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  margin-bottom: 20px;
+}
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-links a {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--sage-light); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+}
+.footer-socials {
+  display: flex;
+  gap: 16px;
+}
+.footer-social {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  font-size: 14px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.footer-social:hover { border-color: var(--sage); color: var(--sage); }
+
+/* ── POPUP ── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44,44,42,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.popup-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.popup-box {
+  background: var(--warm-white);
+  width: 100%;
+  max-width: 540px;
+  margin: 20px;
+  padding: 56px 48px;
+  border-radius: 4px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+.popup-overlay.open .popup-box { transform: translateY(0); }
+.popup-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 36px; height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--charcoal-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.popup-close:hover { background: var(--cream); }
+.popup-step { display: none; }
+.popup-step.active { display: block; }
+.popup-title {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--charcoal);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.popup-sub {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--charcoal-soft);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.popup-dots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+.popup-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cream-dark);
+  transition: background 0.2s;
+}
+.popup-dot.active { background: var(--sage-dark); }
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.quiz-opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid rgba(44,44,42,0.12);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  color: var(--charcoal);
+  background: none;
+  text-align: left;
+  width: 100%;
+}
+.quiz-opt:hover, .quiz-opt.selected {
+  border-color: var(--sage-dark);
+  background: var(--mist);
+}
+.quiz-opt-icon {
+  font-size: 20px;
+  min-width: 28px;
+  text-align: center;
+}
+.thank-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--mist);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: var(--warm-white);
+    padding: 24px;
+    gap: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    z-index: 99;
+  }
+  .hamburger { display: flex; }
+  section { padding: 80px 24px; }
+  .hero-content { padding: 140px 24px 80px; }
+  .hero-stats { display: none; }
+  .hero { grid-template-columns: 1fr !important; }
+  .hero > div:last-child { min-height: 60vh !important; }
+  .about-grid,
+  .space-grid,
+  .booking-grid,
+  .contact-grid,
+  .footer-top { grid-template-columns: 1fr; gap: 40px; }
+  .footer-top { gap: 32px; }
+  .form-row { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  .popup-box { padding: 40px 28px; }
+  .about-badge { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo" onclick="showPage('home')">Mökki<span>.</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('home')">Home</a></li>
+    <li><a href="#" onclick="showPage('about')">About</a></li>
+    <li><a href="#" onclick="showPage('services')">Services</a></li>
+    <li><a href="#" onclick="showPage('functional-medicine')">FM & DNA</a></li>
+    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+    <li><a href="#" class="nav-cta" onclick="openPopup()">Book a Consultation</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section style="position:relative;min-height:100vh;overflow:hidden;padding:0;">
+
+    <!-- Single full-bleed photograph -->
+    <img
+      src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=2000&q=90&fit=crop&crop=focalpoint&fp-x=0.45&fp-y=0.4"
+      alt="Person relaxing with coffee in a bright, airy wellness space"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;"
+    />
+
+    <!-- Gradient: transparent top, dark at bottom-left where text lives -->
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg, rgba(18,20,16,0.62) 0%, rgba(18,20,16,0.38) 45%, rgba(18,20,16,0.05) 100%);"></div>
+
+    <!-- Text — left-aligned, vertically centred -->
+    <div style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 72px 80px;max-width:680px;">
+
+      <div style="display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,241,235,0.7);margin-bottom:32px;">
+        <span style="display:block;width:32px;height:1px;background:rgba(245,241,235,0.5);"></span>
+        Champel · Geneva · Switzerland
+      </div>
+
+      <h1 style="font-family:var(--font-display);font-size:clamp(56px,6.5vw,92px);font-weight:300;line-height:1.04;letter-spacing:-0.01em;color:#F5F1EB;margin-bottom:28px;">
+        Live<br><em style="font-style:italic;color:#C4CEB9;">better,</em><br>longer.
+      </h1>
+
+      <p style="font-size:17px;font-weight:300;color:rgba(245,241,235,0.78);line-height:1.8;max-width:460px;margin-bottom:48px;">
+        World-class Functional Medicine and personalised longevity consultations — rooted in science, built around you.
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
+        <button class="btn-primary" onclick="openPopup()">Book a Consultation</button>
+        <button onclick="showPage('services')" style="background:transparent;color:rgba(245,241,235,0.88);font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:15px 28px;border-radius:2px;border:1px solid rgba(245,241,235,0.35);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(245,241,235,0.8)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(245,241,235,0.35)';this.style.color='rgba(245,241,235,0.88)'">Our services</button>
+      </div>
+    </div>
+
+    <!-- Bottom-right: three quiet stat chips -->
+    <div style="position:absolute;bottom:44px;right:52px;z-index:2;display:flex;gap:3px;">
+      <div style="background:rgba(245,241,235,0.12);backdrop-filter:blur(12px);border:1px solid rgba(245,241,235,0.18);padding:18px 24px;text-align:center;">
+        <div style="font-family:var(--font-display);font-size:34px;font-weight:400;color:#F5F1EB;line-height:1;">1:1</div>
+        <div style="font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,241,235,0.6);margin-top:5px;">Always personal</div>
+      </div>
+      <div style="background:rgba(245,241,235,0.12);backdrop-filter:blur(12px);border:1px solid rgba(245,241,235,0.18);padding:18px 24px;text-align:center;">
+        <div style="font-family:var(--font-display);font-size:34px;font-weight:400;color:#F5F1EB;line-height:1;">15+</div>
+        <div style="font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,241,235,0.6);margin-top:5px;">Biomarkers</div>
+      </div>
+      <div style="background:rgba(74,94,58,0.55);backdrop-filter:blur(12px);border:1px solid rgba(196,206,185,0.3);padding:18px 24px;text-align:center;">
+        <div style="font-family:var(--font-display);font-size:34px;font-weight:400;color:#C4CEB9;line-height:1;">CHF</div>
+        <div style="font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(196,206,185,0.7);margin-top:5px;">Geneva, CH</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span>Functional Medicine</span>
+      <span>DNA & Biomarker Testing</span>
+      <span>Hyperbaric Oxygen Therapy</span>
+      <span>Red Light Therapy</span>
+      <span>Longevity Consultations</span>
+      <span>Holistic Pharmacy</span>
+      <span>Speciality Coffee</span>
+      <span>Corporate Events</span>
+      <span>Functional Medicine</span>
+      <span>DNA & Biomarker Testing</span>
+      <span>Hyperbaric Oxygen Therapy</span>
+      <span>Red Light Therapy</span>
+      <span>Longevity Consultations</span>
+      <span>Holistic Pharmacy</span>
+      <span>Speciality Coffee</span>
+      <span>Corporate Events</span>
+    </div>
+  </div>
+
+  <!-- INTRO / ABOUT TEASER -->
+  <section style="padding:120px 40px;">
+    <div class="section-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+      <div>
+        <p class="section-label">The Mökki philosophy</p>
+        <h2 class="section-title">Health is not a destination.<br>It's <em>how you live.</em></h2>
+      </div>
+      <div>
+        <p class="section-body">Most health services treat symptoms. We look deeper — into your genetics, your biomarkers, your habits and history — to understand the root causes and build a longevity plan that's uniquely yours.<br><br>Whether you're 45 and feeling off, or 60 and wanting to ensure the next 30 years are your best, we're here to help you understand your body and take real, evidence-based action.</p>
+        <div style="margin-top:32px;">
+          <button class="btn-ghost" onclick="showPage('about')">Our story & mission →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES PREVIEW -->
+  <section style="padding:0 40px 120px;">
+    <div class="section-inner">
+      <p class="section-label">What we offer</p>
+      <h2 class="section-title">Everything you need,<br>in <em>one place.</em></h2>
+      <div class="services-grid">
+        <button class="service-card" onclick="showPage('services')">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="18" r="9" stroke="#8A9B7A" stroke-width="1.5"/><path d="M10 40c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="#8A9B7A" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="service-name">1:1 Longevity Consultations</div>
+          <p class="service-desc">In-depth sessions with Josephine and our clinical team. We combine your symptoms, history, blood work and DNA data to build your personal longevity roadmap.</p>
+          <span class="service-link">Learn more</span>
+        </button>
+        <button class="service-card" onclick="showPage('services')">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="28" rx="16" ry="10" stroke="#8A9B7A" stroke-width="1.5"/><ellipse cx="24" cy="20" rx="16" ry="10" stroke="#8A9B7A" stroke-width="1.5"/><path d="M8 20v8M40 20v8" stroke="#8A9B7A" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="service-name">Hyperbaric Oxygen Therapy</div>
+          <p class="service-desc">Pressurised oxygen sessions to accelerate recovery, reduce inflammation, sharpen cognition and support cellular regeneration.</p>
+          <span class="service-link">Learn more</span>
+        </button>
+        <button class="service-card" onclick="showPage('services')">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="10" y="14" width="28" height="20" rx="3" stroke="#8A9B7A" stroke-width="1.5"/><path d="M18 14v-4M30 14v-4M16 24h4M28 24h4" stroke="#8A9B7A" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="service-name">Red Light Therapy</div>
+          <p class="service-desc">Clinically proven photobiomodulation to support skin health, muscle recovery, energy at a cellular level and circadian rhythm regulation.</p>
+          <span class="service-link">Learn more</span>
+        </button>
+        <button class="service-card" onclick="showPage('services')">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M24 8L28 18H38L30 24L33 34L24 28L15 34L18 24L10 18H20L24 8Z" stroke="#8A9B7A" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <div class="service-name">DNA & Biomarker Testing</div>
+          <p class="service-desc">Advanced lab panels and genetic analysis that reveal your unique blueprint — inflammation markers, hormone levels, nutrient deficiencies and longevity indicators.</p>
+          <span class="service-link">Learn more</span>
+        </button>
+        <button class="service-card" onclick="showPage('services')">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><path d="M16 10h16v6l4 4v18H12V20l4-4V10Z" stroke="#8A9B7A" stroke-width="1.5"/><path d="M20 10v4h8v-4" stroke="#8A9B7A" stroke-width="1.5"/><path d="M20 28h8M24 24v8" stroke="#8A9B7A" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="service-name">Holistic Pharmacy</div>
+          <p class="service-desc">Practitioner-grade nutraceuticals, targeted supplements and natural compounds — curated and recommended by our clinical team based on your actual data.</p>
+          <span class="service-link">Learn more</span>
+        </button>
+        <button class="service-card" onclick="showPage('services')">
+          <svg class="service-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="16" width="32" height="24" rx="3" stroke="#8A9B7A" stroke-width="1.5"/><path d="M16 16V12a8 8 0 0116 0v4" stroke="#8A9B7A" stroke-width="1.5"/><path d="M18 28h4l2 4 4-8 2 4h4" stroke="#8A9B7A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="service-name">Corporate Health Events</div>
+          <p class="service-desc">Hire the Mökki space for off-sites, health awareness days, and team wellbeing workshops. A unique Geneva venue that leaves teams energised, not just entertained.</p>
+          <span class="service-link">Enquire</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY BAND -->
+  <div class="philosophy-band">
+    <p class="philosophy-quote">"Your genes are not your destiny. They respond to how you live, rest, eat, move, and think."</p>
+    <p class="philosophy-attr">The Mökki approach to longevity</p>
+  </div>
+
+  <!-- ABOUT TEASER -->
+  <section class="about-strip">
+    <div class="about-grid section-inner">
+      <div class="about-visual">
+        <div class="about-portrait-bg">
+          <svg class="about-portrait-svg" viewBox="0 0 440 590" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="590" fill="#DDD5C8"/>
+            <ellipse cx="220" cy="185" rx="80" ry="90" fill="#C4A882"/>
+            <ellipse cx="220" cy="185" rx="65" ry="75" fill="#B89870"/>
+            <circle cx="220" cy="155" r="45" fill="#C4A882"/>
+            <path d="M150 590 Q175 380 220 370 Q265 380 290 590Z" fill="#8A9B7A"/>
+            <path d="M165 590 Q175 420 220 410 Q265 420 275 590Z" fill="#7A8B6A"/>
+            <ellipse cx="220" cy="155" rx="40" ry="42" fill="#D4B892"/>
+            <path d="M180 140 Q220 120 260 140" fill="none" stroke="#8C7060" stroke-width="2"/>
+            <ellipse cx="207" cy="152" rx="6" ry="4" fill="#6A5040" opacity="0.7"/>
+            <ellipse cx="233" cy="152" rx="6" ry="4" fill="#6A5040" opacity="0.7"/>
+            <path d="M208 165 Q220 175 232 165" fill="none" stroke="#B08070" stroke-width="2" stroke-linecap="round"/>
+            <text x="220" y="490" font-family="Georgia,serif" font-size="22" fill="#6A5E50" text-anchor="middle">Josephine</text>
+            <text x="220" y="518" font-family="Georgia,serif" font-size="16" fill="#8A7A6A" text-anchor="middle" font-style="italic">Pallandt</text>
+            <text x="220" y="545" font-family="sans-serif" font-size="11" fill="#9A8A7A" text-anchor="middle" letter-spacing="2">LONGEVITY SPECIALIST</text>
+          </svg>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-num">15+</div>
+          <div class="about-badge-label">Years experience</div>
+        </div>
+      </div>
+      <div>
+        <p class="section-label">Meet Josephine</p>
+        <h2 class="section-title">From PwC<br>boardrooms to<br><em>longevity labs.</em></h2>
+        <p class="section-body">Josephine Pallandt spent over a decade as a consultant at PricewaterhouseCoopers before a personal health journey led her to retrain as a certified longevity practitioner and Functional Medicine specialist.<br><br>Her unique background — analytical rigour meets deep human curiosity — shapes everything about the Mökki experience.</p>
+        <div class="about-credentials">
+          <span class="credential-pill">Certified Longevity Practitioner</span>
+          <span class="credential-pill">Functional Medicine Specialist</span>
+          <span class="credential-pill">PwC Consultant (Former)</span>
+          <span class="credential-pill">Nutrigenomics Trained</span>
+        </div>
+        <div style="margin-top:36px;">
+          <button class="btn-primary" onclick="showPage('about')">Read our story</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="section-inner">
+      <p class="section-label">What people say</p>
+      <h2 class="section-title">Real people.<br><em>Real results.</em></h2>
+      <div class="testimonials-wrap">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"At 52 I was exhausted all the time and just accepted it as ageing. After three months with Mökki, my energy is better than it was at 40. The blood work told a story my GP had missed for years."</p>
+          <div class="testimonial-author">M. Laurent</div>
+          <div class="testimonial-role">CFO, Geneva · Age 52</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I came for the HBOT sessions and ended up doing a full longevity consultation. Six months later my inflammation markers are down, I've lost 8kg, and I actually enjoy my mornings."</p>
+          <div class="testimonial-author">S. Hoffman</div>
+          <div class="testimonial-role">Entrepreneur · Age 47</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Our corporate day at Mökki was unlike any team event we'd done before. The health consultations sparked conversations that are still going three months later. Highly recommended."</p>
+          <div class="testimonial-author">A. Schneider</div>
+          <div class="testimonial-role">HR Director, Zürich</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background:var(--cream);padding:120px 40px;">
+    <div class="section-inner">
+      <p class="section-label">Questions</p>
+      <h2 class="section-title" style="text-align:center;">Frequently asked</h2>
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Is Mökki a medical clinic? <span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Mökki is not a traditional medical clinic. We operate in the space of Functional Medicine and longevity optimisation, working alongside your existing medical team. Our GP partner can provide medical consultation and testing referrals, and we always recommend working collaboratively with your doctor.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">How is this different from seeing my GP? <span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Your GP is excellent at diagnosing and treating illness. We focus on optimisation and prevention — looking at your full picture before problems arise. We run advanced panels your GP likely doesn't offer and spend significantly more time understanding your individual biology, lifestyle and goals.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">What does a first consultation look like? <span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Your first session is typically 90 minutes with Josephine. We'll review your health history, current symptoms, lifestyle factors and any existing test data. From there we'll recommend which additional tests or therapies are most relevant for you, and begin building your personalised longevity plan.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Do you accept health insurance? <span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Some of our services can be partially covered by certain Swiss supplementary insurance (Zusatzversicherung / assurance complémentaire). We recommend checking with your insurer directly. We provide detailed invoices to support any reimbursement claims. Our goal is to help reduce your long-term insurance costs through prevention.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">Can I hire the Mökki space for a corporate event? <span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Yes — and we'd love to host you. The Mökki space works beautifully for team off-sites, health awareness days, leadership dinners and innovation workshops. We can combine venue hire with group health consultations, HBOT taster sessions or personalised supplement consultations. Contact us to discuss your event.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL CAPTURE -->
+  <section style="padding:80px 40px;">
+    <div class="section-inner" style="text-align:center;max-width:600px;margin:0 auto;">
+      <p class="section-label">Stay informed</p>
+      <h2 class="section-title">The Mökki <em>Letter</em></h2>
+      <p class="section-body" style="margin:0 auto 36px;">Longevity insights, research we find fascinating, and occasional news from the center. No noise, no spam — just things worth knowing.</p>
+      <form onsubmit="handleEmailCapture(event)" style="display:flex;gap:12px;max-width:440px;margin:0 auto;">
+        <input type="email" placeholder="your@email.com" required class="form-control" style="flex:1;"/>
+        <button type="submit" class="btn-primary" style="white-space:nowrap;">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════ ABOUT PAGE ═══════════════ -->
+<div class="page" id="page-about">
+  <div class="info-hero">
+    <div class="section-inner">
+      <p class="section-label">Our story</p>
+      <h1 class="section-title">Built by someone who<br>needed it <em>herself.</em></h1>
+      <p class="section-body">Josephine Pallandt founded Mökki after her own frustrating journey through conventional medicine — and the transformation that followed when she found Functional Medicine.</p>
+    </div>
+  </div>
+
+  <section class="about-strip" style="padding:80px 40px;">
+    <div class="about-grid section-inner">
+      <div class="about-visual">
+        <div class="about-portrait-bg">
+          <svg class="about-portrait-svg" viewBox="0 0 440 590" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="590" fill="#DDD5C8"/>
+            <ellipse cx="220" cy="185" rx="80" ry="90" fill="#C4A882"/>
+            <circle cx="220" cy="155" r="45" fill="#D4B892"/>
+            <path d="M150 590 Q175 380 220 370 Q265 380 290 590Z" fill="#8A9B7A"/>
+            <ellipse cx="207" cy="152" rx="6" ry="4" fill="#6A5040" opacity="0.7"/>
+            <ellipse cx="233" cy="152" rx="6" ry="4" fill="#6A5040" opacity="0.7"/>
+            <path d="M208 165 Q220 175 232 165" fill="none" stroke="#B08070" stroke-width="2" stroke-linecap="round"/>
+            <text x="220" y="490" font-family="Georgia,serif" font-size="22" fill="#6A5E50" text-anchor="middle">Josephine Pallandt</text>
+            <text x="220" y="520" font-family="sans-serif" font-size="11" fill="#9A8A7A" text-anchor="middle" letter-spacing="2">FOUNDER & LONGEVITY SPECIALIST</text>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <p class="section-label">Josephine Pallandt</p>
+        <h2 class="section-title" style="font-size:clamp(32px,4vw,50px);">Founder &<br><em>Lead Specialist</em></h2>
+        <p class="section-body">After more than a decade advising global organisations at PricewaterhouseCoopers, Josephine found herself in her mid-40s with a list of symptoms her doctors couldn't explain and a feeling that something was fundamentally off.<br><br>The investigation that followed — into Functional Medicine, epigenetics, nutrigenomics and longevity science — changed everything. She retrained. She rebuilt her own health. And then she built Mökki, so others could have access to the same.</p>
+        <div class="about-credentials" style="margin-top:32px;">
+          <span class="credential-pill">Certified Longevity Practitioner</span>
+          <span class="credential-pill">Functional Medicine Specialist</span>
+          <span class="credential-pill">Nutrigenomics Training (IFM)</span>
+          <span class="credential-pill">PwC Senior Consultant (15+ years)</span>
+          <span class="credential-pill">Epigenetics & DNA Health Practitioner</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+        <div>
+          <p class="section-label">Our mission</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,50px);">Find the root.<br><em>Not just the relief.</em></h2>
+          <p class="section-body">Too many people in their 40s, 50s and 60s are managing symptoms without understanding causes. They're told their results are "in range" but they feel anything but well. Or they're proactive about their health but overwhelmed by conflicting advice.<br><br>Mökki exists to change that. Using advanced diagnostics, deep clinical listening and the science of Functional Medicine, we help you understand what's actually happening in your body — and what to do about it.</p>
+        </div>
+        <div>
+          <p class="section-label">Our values</p>
+          <div class="space-features" style="margin-top:0;">
+            <div class="space-feature">
+              <div class="space-feature-num">01</div>
+              <div class="space-feature-text">
+                <h4>Evidence first</h4>
+                <p>Every recommendation we make is grounded in peer-reviewed science, not trends.</p>
+              </div>
+            </div>
+            <div class="space-feature">
+              <div class="space-feature-num">02</div>
+              <div class="space-feature-text">
+                <h4>Radically individual</h4>
+                <p>Your biology is unique. Your plan should be too. No templates, no guesswork.</p>
+              </div>
+            </div>
+            <div class="space-feature">
+              <div class="space-feature-num">03</div>
+              <div class="space-feature-text">
+                <h4>Prevention over treatment</h4>
+                <p>We'd rather help you avoid the problem at 50 than treat it at 60.</p>
+              </div>
+            </div>
+            <div class="space-feature">
+              <div class="space-feature-num">04</div>
+              <div class="space-feature-text">
+                <h4>Warmth without waffle</h4>
+                <p>We're welcoming and approachable, but we'll always be straight with you.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The space -->
+  <section class="space-section">
+    <div class="section-inner">
+      <p class="section-label">The Center</p>
+      <h2 class="section-title">A space that feels<br>as good as it <em>works.</em></h2>
+      <div class="space-grid">
+        <div>
+          <p class="section-body">Located in the Champel neighbourhood of Geneva, Mökki is designed to feel nothing like a clinic. Think natural materials, great light, the smell of excellent coffee, and a team who actually have time for you.<br><br>It's also an events venue — available for corporate health days, off-sites, and team workshops that leave people feeling better than when they arrived.</p>
+          <div style="margin-top:36px;">
+            <button class="btn-primary" onclick="showPage('contact')">Plan a visit</button>
+          </div>
+        </div>
+        <div>
+          <svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:2px;">
+            <rect width="500" height="380" fill="#E8E2D8"/>
+            <rect x="0" y="280" width="500" height="100" fill="#CCC4B0"/>
+            <rect x="60" y="80" width="380" height="200" fill="#D8D0C4" rx="3"/>
+            <rect x="80" y="100" width="340" height="140" fill="#C4D0C0" opacity="0.7" rx="2"/>
+            <rect x="80" y="240" width="340" height="40" fill="#8C7050" rx="2"/>
+            <ellipse cx="200" cy="195" rx="60" ry="28" fill="#B8C4B4" opacity="0.8"/>
+            <ellipse cx="200" cy="195" rx="52" ry="22" fill="#C8D4C4" opacity="0.9"/>
+            <rect x="280" y="150" width="30" height="50" fill="#4A4A46" rx="2" opacity="0.8"/>
+            <circle cx="295" cy="165" r="8" fill="#6A6A66" opacity="0.8"/>
+            <text x="250" y="360" font-family="Georgia,serif" font-size="13" fill="#8A7A6A" text-anchor="middle" font-style="italic">Champel, Geneva — Opening 2025</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="philosophy-band">
+    <p class="philosophy-quote">"We want people to walk out of Mökki feeling like they understand themselves better — and knowing exactly what to do next."</p>
+    <p class="philosophy-attr">Josephine Pallandt, Founder</p>
+  </div>
+</div><!-- /page-about -->
+
+
+<!-- ═══════════════ SERVICES PAGE ═══════════════ -->
+<div class="page" id="page-services">
+  <div class="info-hero">
+    <div class="section-inner">
+      <p class="section-label">Services</p>
+      <h1 class="section-title">Everything starts<br>with <em>understanding you.</em></h1>
+      <p class="section-body">Our services are designed to work together — or individually, depending on where you are in your journey.</p>
+    </div>
+  </div>
+
+  <section id="services-overview" style="background:var(--cream);">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:2px;">
+        <button onclick="scrollToService('service-consultation')" style="background:var(--linen);border:none;cursor:pointer;padding:36px 24px;text-align:left;transition:background 0.2s;" onmouseover="this.style.background='#ede8e0'" onmouseout="this.style.background='var(--linen)'">
+          <div style="font-size:28px;margin-bottom:16px;">🤝</div>
+          <p style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:8px;">Consultation</p>
+          <p style="font-size:15px;font-weight:400;color:var(--charcoal);line-height:1.4;margin-bottom:12px;">1:1 with Josephine</p>
+          <span style="font-size:11px;color:var(--sage-dark);letter-spacing:0.05em;">View ↓</span>
+        </button>
+        <button onclick="scrollToService('service-gp')" style="background:var(--linen);border:none;cursor:pointer;padding:36px 24px;text-align:left;transition:background 0.2s;" onmouseover="this.style.background='#ede8e0'" onmouseout="this.style.background='var(--linen)'">
+          <div style="font-size:28px;margin-bottom:16px;">🩺</div>
+          <p style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:8px;">Medical</p>
+          <p style="font-size:15px;font-weight:400;color:var(--charcoal);line-height:1.4;margin-bottom:12px;">GP & Clinical Review</p>
+          <span style="font-size:11px;color:var(--sage-dark);letter-spacing:0.05em;">View ↓</span>
+        </button>
+        <button onclick="scrollToService('service-hbot')" style="background:var(--linen);border:none;cursor:pointer;padding:36px 24px;text-align:left;transition:background 0.2s;" onmouseover="this.style.background='#ede8e0'" onmouseout="this.style.background='var(--linen)'">
+          <div style="font-size:28px;margin-bottom:16px;">🫁</div>
+          <p style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:8px;">Therapy</p>
+          <p style="font-size:15px;font-weight:400;color:var(--charcoal);line-height:1.4;margin-bottom:12px;">Hyperbaric Oxygen</p>
+          <span style="font-size:11px;color:var(--sage-dark);letter-spacing:0.05em;">View ↓</span>
+        </button>
+        <button onclick="scrollToService('service-rlt')" style="background:var(--linen);border:none;cursor:pointer;padding:36px 24px;text-align:left;transition:background 0.2s;" onmouseover="this.style.background='#ede8e0'" onmouseout="this.style.background='var(--linen)'">
+          <div style="font-size:28px;margin-bottom:16px;">💡</div>
+          <p style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:8px;">Therapy</p>
+          <p style="font-size:15px;font-weight:400;color:var(--charcoal);line-height:1.4;margin-bottom:12px;">Red Light Therapy</p>
+          <span style="font-size:11px;color:var(--sage-dark);letter-spacing:0.05em;">View ↓</span>
+        </button>
+        <button onclick="scrollToService('service-dna')" style="background:var(--linen);border:none;cursor:pointer;padding:36px 24px;text-align:left;transition:background 0.2s;" onmouseover="this.style.background='#ede8e0'" onmouseout="this.style.background='var(--linen)'">
+          <div style="font-size:28px;margin-bottom:16px;">🧬</div>
+          <p style="font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:8px;">Testing</p>
+          <p style="font-size:15px;font-weight:400;color:var(--charcoal);line-height:1.4;margin-bottom:12px;">DNA & Biomarker Testing</p>
+          <span style="font-size:11px;color:var(--sage-dark);letter-spacing:0.05em;">View ↓</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-inner">
+      <!-- Service 1 -->
+      <div id="service-consultation" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;padding-bottom:80px;border-bottom:1px solid rgba(44,44,42,0.08);margin-bottom:80px;align-items:start;scroll-margin-top:120px;">
+        <div>
+          <p class="section-label">Consultation</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,48px);">1:1 with<br><em>Josephine</em></h2>
+          <p class="section-body">An in-depth consultation with Josephine exploring your full health history, current symptoms, lifestyle, stress, sleep, nutrition and goals. You'll leave with clarity and a clear action plan.<br><br><strong>Duration:</strong> 90 minutes (initial) · 45 minutes (follow-up)<br><strong>Format:</strong> In-person at Mökki, Champel</p>
+          <div style="margin-top:32px;">
+            <button class="btn-primary" onclick="openPopup()">Book now</button>
+          </div>
+        </div>
+        <div style="background:var(--cream);padding:40px;border-radius:2px;">
+          <p style="font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:20px;">What to expect</p>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;gap:12px;"><span style="color:var(--sage-dark);font-size:18px;">✓</span><span style="font-size:14px;color:var(--charcoal-soft);">Deep health history review</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--sage-dark);font-size:18px;">✓</span><span style="font-size:14px;color:var(--charcoal-soft);">Symptom pattern analysis</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--sage-dark);font-size:18px;">✓</span><span style="font-size:14px;color:var(--charcoal-soft);">Lifestyle & nutrition assessment</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--sage-dark);font-size:18px;">✓</span><span style="font-size:14px;color:var(--charcoal-soft);">Testing recommendations</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--sage-dark);font-size:18px;">✓</span><span style="font-size:14px;color:var(--charcoal-soft);">Written longevity action plan</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--sage-dark);font-size:18px;">✓</span><span style="font-size:14px;color:var(--charcoal-soft);">Supplement & referral guidance</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div id="service-gp" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;padding-bottom:80px;border-bottom:1px solid rgba(44,44,42,0.08);margin-bottom:80px;align-items:start;scroll-margin-top:120px;">
+        <div>
+          <p class="section-label">Medical</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,48px);">GP &<br><em>clinical review</em></h2>
+          <p class="section-body">Access to our partner physician for medical consultation, prescription referrals and interpretation of complex diagnostic results. Combining conventional medicine with a Functional Medicine lens.<br><br><strong>Duration:</strong> 60 minutes<br><strong>Format:</strong> In-person, Champel</p>
+          <div style="margin-top:32px;">
+            <button class="btn-primary" onclick="openPopup()">Book now</button>
+          </div>
+        </div>
+        <div style="background:var(--mist);padding:40px;border-radius:2px;">
+          <p style="font-size:13px;font-weight:300;font-style:italic;color:var(--charcoal-soft);line-height:1.8;">Our clinical partner brings decades of conventional medical experience and a genuine understanding of Functional Medicine — a rare combination. This session is ideal for those who need both medical authority and integrative thinking.</p>
+        </div>
+      </div>
+
+      <!-- Service 3 - HBOT -->
+      <div id="service-hbot" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;padding-bottom:80px;border-bottom:1px solid rgba(44,44,42,0.08);margin-bottom:80px;align-items:start;scroll-margin-top:120px;">
+        <div>
+          <p class="section-label">Therapy</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,48px);">Hyperbaric<br><em>Oxygen Therapy</em></h2>
+          <p class="section-body">HBOT involves breathing pure oxygen in a pressurised chamber, which dramatically increases the oxygen available to your tissues. Research supports its role in reducing inflammation, accelerating healing and supporting cognitive function.<br><br><strong>Sessions:</strong> 60 or 90 minutes<br><strong>Recommended:</strong> Course of 10–20 sessions</p>
+          <div style="margin-top:32px;display:flex;gap:16px;">
+            <button class="btn-primary" onclick="openPopup()">Book a session</button>
+            <button class="btn-ghost" onclick="showPage('functional-medicine')">Learn more</button>
+          </div>
+        </div>
+        <div style="background:var(--cream);padding:40px;border-radius:2px;">
+          <p style="font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:20px;">Research supports HBOT for</p>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Cellular regeneration & longevity</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Chronic inflammation reduction</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Post-exercise recovery</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Cognitive performance & focus</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Wound healing</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Post-COVID recovery support</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 4 - RLT -->
+      <div id="service-rlt" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;padding-bottom:80px;border-bottom:1px solid rgba(44,44,42,0.08);margin-bottom:80px;align-items:start;scroll-margin-top:120px;">
+        <div>
+          <p class="section-label">Therapy</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,48px);">Red Light<br><em>Therapy</em></h2>
+          <p class="section-body">Photobiomodulation (PBM) uses specific wavelengths of red and near-infrared light to stimulate cellular energy production (ATP), reduce oxidative stress and support mitochondrial function.<br><br><strong>Sessions:</strong> 20 minutes<br><strong>Recommended:</strong> 3–4 sessions per week</p>
+          <div style="margin-top:32px;">
+            <button class="btn-primary" onclick="openPopup()">Book a session</button>
+          </div>
+        </div>
+        <div style="background:var(--cream);padding:40px;border-radius:2px;">
+          <p style="font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:20px;">Benefits include</p>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Skin quality & collagen production</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Muscle recovery & performance</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Energy & mitochondrial function</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Sleep & circadian rhythm</span></div>
+            <div style="display:flex;gap:12px;"><span style="color:var(--earth-light);">→</span><span style="font-size:14px;color:var(--charcoal-soft);">Joint pain & inflammation</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service 5 - DNA / Biomarkers -->
+      <div id="service-dna" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;scroll-margin-top:120px;">
+        <div>
+          <p class="section-label">Testing</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,48px);">DNA & Biomarker<br><em>Testing</em></h2>
+          <p class="section-body">We run comprehensive lab panels that go far beyond a standard GP blood test — covering hormones, inflammation markers, micronutrients, metabolic health and genetic risk factors. All interpreted by our clinical team in the context of your whole picture.<br><br>Options include: comprehensive blood panel, full hormone panel, DNA health report, gut microbiome analysis, and more.</p>
+          <div style="margin-top:32px;display:flex;gap:16px;">
+            <button class="btn-primary" onclick="openPopup()">Enquire about testing</button>
+            <button class="btn-ghost" onclick="showPage('functional-medicine')">What is DNA Care?</button>
+          </div>
+        </div>
+        <div style="background:var(--mist);padding:40px;border-radius:2px;">
+          <p style="font-size:13px;font-weight:300;font-style:italic;color:var(--charcoal-soft);line-height:1.8;">"Most standard blood tests tell you if you're sick. Our panels tell you where you're heading — and what to do to change direction before you get there."</p>
+          <p style="font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--earth);margin-top:20px;">Josephine Pallandt</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-services -->
+
+
+<!-- ═══════════════ INFO PAGE (FM + DNA) ═══════════════ -->
+<div class="page" id="page-functional-medicine">
+  <div class="info-hero">
+    <div class="section-inner">
+      <p class="section-label">Learn</p>
+      <h1 class="section-title">Functional Medicine<br>& <em>DNA Health</em></h1>
+      <p class="section-body">Understanding the science behind how we work — and why it's different from conventional medicine.</p>
+    </div>
+  </div>
+
+  <div class="info-content section-inner">
+    <h2>What is Functional Medicine?</h2>
+    <p>Functional Medicine is a systems-based approach to healthcare that seeks to identify and address the root causes of disease, rather than simply managing symptoms. It treats the body as an interconnected whole — not a collection of isolated parts — and takes into account the complex interactions between genetics, environment, and lifestyle.</p>
+    <p>Where conventional medicine typically asks "what disease do you have?", Functional Medicine asks "why does this person have this symptom, and what can we do to restore normal function?" This shifts the focus from disease management to true health creation.</p>
+    <div class="info-highlight">
+      "Functional Medicine doesn't replace conventional medicine. It complements it — by asking deeper questions and looking for patterns that standard testing misses."
+    </div>
+    <div class="info-grid">
+      <div class="info-point">
+        <h4>Personalised</h4>
+        <p>Treatment plans based on your unique genetics, history and biology — not population averages.</p>
+      </div>
+      <div class="info-point">
+        <h4>Systems thinking</h4>
+        <p>We look at how different systems interact — gut, hormones, immune, nervous — rather than treating each in isolation.</p>
+      </div>
+      <div class="info-point">
+        <h4>Root cause focused</h4>
+        <p>We investigate underlying drivers: inflammation, nutrient deficiencies, toxin burden, stress, gut imbalance.</p>
+      </div>
+      <div class="info-point">
+        <h4>Evidence-based</h4>
+        <p>Every recommendation is grounded in peer-reviewed science, from nutrigenomics to epigenetics.</p>
+      </div>
+    </div>
+
+    <h2>What is DNA Care & Epigenetics?</h2>
+    <p>Your DNA is not your destiny. While your genes provide a blueprint, epigenetics — the study of how gene expression is regulated — shows us that how your genes behave is influenced enormously by how you live, eat, sleep, move and manage stress.</p>
+    <p>DNA health testing at Mökki uses advanced genetic analysis to identify predispositions — to inflammation, to nutrient absorption difficulties, to hormonal imbalances, to detoxification challenges — so we can design targeted interventions before problems develop.</p>
+    <div class="info-highlight">
+      "Your genes are not your destiny. They respond to how you live, rest, eat, move, and think. Understanding your DNA gives us the map — Functional Medicine gives us the tools to navigate it."
+    </div>
+
+    <h2>What is Hyperbaric Oxygen Therapy (HBOT)?</h2>
+    <p>Hyperbaric Oxygen Therapy involves breathing pure (100%) oxygen inside a pressurised chamber. Under pressure, oxygen dissolves into the plasma and reaches tissues that normal red blood cells cannot easily access. This triggers a cascade of regenerative responses at a cellular level.</p>
+    <p>Research from the Shamir Medical Center in Israel (2020) demonstrated that HBOT protocols can actually lengthen telomeres — the protective caps on chromosomes associated with biological ageing — while simultaneously reducing senescent ("zombie") cells. This makes it one of the most exciting tools in the longevity toolkit.</p>
+
+    <h2>What is Red Light Therapy (Photobiomodulation)?</h2>
+    <p>Red light therapy uses specific wavelengths of red (630–700nm) and near-infrared (800–1100nm) light to penetrate skin and underlying tissue. At the cellular level, these wavelengths are absorbed by the mitochondria — the energy-producing structures in every cell — and stimulate the production of ATP (adenosine triphosphate), the primary energy currency of the body.</p>
+    <p>The result is a reduction in oxidative stress, improved cellular function, reduced inflammation and accelerated tissue repair. It is one of the most well-studied non-invasive therapies in the longevity space, with strong evidence for its use in skin health, muscle recovery, pain management, sleep quality and cognitive function.</p>
+    <div style="margin-top:48px;">
+      <button class="btn-primary" onclick="showPage('services')">Explore our services</button>
+    </div>
+  </div>
+</div><!-- /page-functional-medicine -->
+
+
+<!-- ═══════════════ CONTACT PAGE ═══════════════ -->
+<div class="page" id="page-contact">
+  <div class="info-hero">
+    <div class="section-inner">
+      <p class="section-label">Get in touch</p>
+      <h1 class="section-title">Let's start<br>your <em>journey.</em></h1>
+      <p class="section-body">Whether you have questions, want to book a consultation, or are thinking about a corporate event — we'd love to hear from you.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div>
+          <p class="section-label">Book a consultation</p>
+          <h2 class="section-title" style="font-size:clamp(32px,4vw,48px);">Make an<br><em>appointment</em></h2>
+          <div class="contact-details">
+            <div class="contact-item">
+              <span class="contact-item-label">Address</span>
+              <span class="contact-item-value">Champel, Geneva</span>
+              <span style="font-size:14px;color:var(--charcoal-soft);">Switzerland · Full address on booking confirmation</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-label">Email</span>
+              <span class="contact-item-value">hello@mokkiswitzerland.com</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-label">Hours</span>
+              <span style="font-size:16px;color:var(--charcoal);">Monday – Friday: 8:00 – 18:00<br>Saturday: 9:00 – 14:00</span>
+            </div>
+            <div class="contact-item">
+              <span class="contact-item-label">Languages</span>
+              <span style="font-size:16px;color:var(--charcoal);">English · French · German</span>
+            </div>
+          </div>
+          <div class="contact-map-mock">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+              <rect width="400" height="300" fill="#E4DDD4"/>
+              <line x1="0" y1="100" x2="400" y2="100" stroke="#D0C8BC" stroke-width="1"/>
+              <line x1="0" y1="200" x2="400" y2="200" stroke="#D0C8BC" stroke-width="1"/>
+              <line x1="133" y1="0" x2="133" y2="300" stroke="#D0C8BC" stroke-width="1"/>
+              <line x1="266" y1="0" x2="266" y2="300" stroke="#D0C8BC" stroke-width="1"/>
+              <rect x="80" y="120" width="240" height="6" fill="#C4BDB4" rx="3"/>
+              <rect x="0" y="160" width="400" height="6" fill="#C4BDB4" rx="3"/>
+              <rect x="150" y="50" width="6" height="200" fill="#C4BDB4" rx="3"/>
+              <rect x="240" y="0" width="6" height="180" fill="#C4BDB4" rx="3"/>
+              <circle cx="200" cy="150" r="14" fill="#4A5E3A"/>
+              <circle cx="200" cy="150" r="6" fill="white"/>
+              <circle cx="200" cy="150" r="30" fill="#4A5E3A" opacity="0.15"/>
+              <text x="200" y="200" font-family="sans-serif" font-size="11" fill="#6A5E50" text-anchor="middle" letter-spacing="1">CHAMPEL · GENEVA</text>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="booking-types" style="margin-bottom:32px;">
+            <div class="booking-type selected" onclick="selectBookingType(this)">
+              <div class="booking-type-icon">🧬</div>
+              <div class="booking-type-info">
+                <h4>Longevity Consultation</h4>
+                <p>90 min · With Josephine</p>
+              </div>
+            </div>
+            <div class="booking-type" onclick="selectBookingType(this)">
+              <div class="booking-type-icon">🩺</div>
+              <div class="booking-type-info">
+                <h4>GP / Medical Consultation</h4>
+                <p>60 min · With our physician</p>
+              </div>
+            </div>
+            <div class="booking-type" onclick="selectBookingType(this)">
+              <div class="booking-type-icon">⭕</div>
+              <div class="booking-type-info">
+                <h4>Hyperbaric Oxygen Therapy</h4>
+                <p>60 or 90 min session</p>
+              </div>
+            </div>
+            <div class="booking-type" onclick="selectBookingType(this)">
+              <div class="booking-type-icon">🔴</div>
+              <div class="booking-type-info">
+                <h4>Red Light Therapy</h4>
+                <p>20 min session</p>
+              </div>
+            </div>
+            <div class="booking-type" onclick="selectBookingType(this)">
+              <div class="booking-type-icon">🏢</div>
+              <div class="booking-type-info">
+                <h4>Corporate / Event Enquiry</h4>
+                <p>Group · Hire the space</p>
+              </div>
+            </div>
+          </div>
+          <form onsubmit="handleBooking(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First name</label>
+                <input type="text" class="form-control" placeholder="Marie" required/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last name</label>
+                <input type="text" class="form-control" placeholder="Laurent" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" placeholder="marie@example.com" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone (optional)</label>
+              <input type="tel" class="form-control" placeholder="+41 79 000 00 00"/>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Preferred date</label>
+                <input type="date" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Preferred time</label>
+                <select class="form-control">
+                  <option>Morning (8–12)</option>
+                  <option>Afternoon (12–16)</option>
+                  <option>Late afternoon (16–18)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tell us a little about what's brought you here</label>
+              <textarea class="form-control" rows="4" placeholder="Briefly describe your main health goals or concerns — this helps us prepare for your visit." style="resize:vertical;"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Request Appointment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /page-contact -->
+
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Mökki.</div>
+        <p class="footer-tagline">World-class Functional Medicine, longevity therapy and personalised health consultations. Geneva, Switzerland.</p>
+        <div style="margin-top:28px;display:flex;gap:12px;">
+          <a href="#" class="footer-social" aria-label="Instagram">IG</a>
+          <a href="#" class="footer-social" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Services</p>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showPage('services')">Longevity Consultations</a></li>
+          <li><a href="#" onclick="showPage('services')">HBOT</a></li>
+          <li><a href="#" onclick="showPage('services')">Red Light Therapy</a></li>
+          <li><a href="#" onclick="showPage('services')">DNA & Biomarker Testing</a></li>
+          <li><a href="#" onclick="showPage('services')">Holistic Pharmacy</a></li>
+          <li><a href="#" onclick="showPage('services')">Corporate Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Learn</p>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showPage('functional-medicine')">What is Functional Medicine?</a></li>
+          <li><a href="#" onclick="showPage('functional-medicine')">DNA Care & Epigenetics</a></li>
+          <li><a href="#" onclick="showPage('functional-medicine')">HBOT explained</a></li>
+          <li><a href="#" onclick="showPage('functional-medicine')">Red Light Therapy</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Visit</p>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showPage('about')">About Josephine</a></li>
+          <li><a href="#" onclick="showPage('contact')">Book a consultation</a></li>
+          <li><a href="#" onclick="showPage('contact')">Contact us</a></li>
+          <li><a href="#">Privacy policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Mökki Switzerland. All rights reserved.</span>
+      <span>Champel, Geneva · mokkiswitzerland.com</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════ POPUP ═══════════════ -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopupOutside(event)">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()" aria-label="Close">✕</button>
+    <div class="popup-dots">
+      <div class="popup-dot active" id="dot0"></div>
+      <div class="popup-dot" id="dot1"></div>
+      <div class="popup-dot" id="dot2"></div>
+    </div>
+
+    <!-- Step 1: Name + Email -->
+    <div class="popup-step active" id="step0">
+      <h2 class="popup-title">Start your<br>journey.</h2>
+      <p class="popup-sub">Tell us a little about yourself and we'll be in touch to arrange your first consultation.</p>
+      <div class="form-group">
+        <label class="form-label">Your name</label>
+        <input type="text" id="popup-name" class="form-control" placeholder="Marie Laurent"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input type="email" id="popup-email" class="form-control" placeholder="marie@example.com"/>
+      </div>
+      <button class="submit-btn" onclick="goStep(1)">Continue →</button>
+    </div>
+
+    <!-- Step 2: Quiz -->
+    <div class="popup-step" id="step1">
+      <h2 class="popup-title">What brings<br>you here?</h2>
+      <p class="popup-sub">Select the option that fits best — this helps us prepare for your visit.</p>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="selectOpt(this)"><span class="quiz-opt-icon">⚡</span>Low energy or fatigue</button>
+        <button class="quiz-opt" onclick="selectOpt(this)"><span class="quiz-opt-icon">🧬</span>Longevity & preventive health</button>
+        <button class="quiz-opt" onclick="selectOpt(this)"><span class="quiz-opt-icon">⚖️</span>Weight or metabolic health</button>
+        <button class="quiz-opt" onclick="selectOpt(this)"><span class="quiz-opt-icon">😴</span>Sleep or stress issues</button>
+        <button class="quiz-opt" onclick="selectOpt(this)"><span class="quiz-opt-icon">🔬</span>Want advanced testing</button>
+        <button class="quiz-opt" onclick="selectOpt(this)"><span class="quiz-opt-icon">🏢</span>Corporate event enquiry</button>
+      </div>
+      <button class="submit-btn" onclick="goStep(2)">Continue →</button>
+    </div>
+
+    <!-- Step 3: Thank you -->
+    <div class="popup-step" id="step2">
+      <div class="thank-icon">🌿</div>
+      <h2 class="popup-title">Thank you.</h2>
+      <p class="popup-sub">We've received your details and will be in touch within one business day to arrange your consultation.<br><br>In the meantime, feel free to explore our services and learn more about our approach.</p>
+      <button class="submit-btn" onclick="closePopup();showPage('services')">Explore services →</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + id);
+  if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const navLinks = document.getElementById('navLinks');
+  navLinks.classList.remove('open');
+}
+function scrollToService(id) {
+  event.preventDefault();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function openPopup() {
+  goStep(0);
+  document.getElementById('popupOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePopup() {
+  document.getElementById('popupOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closePopupOutside(e) {
+  if (e.target === document.getElementById('popupOverlay')) closePopup();
+}
+function goStep(n) {
+  document.querySelectorAll('.popup-step').forEach((s, i) => s.classList.toggle('active', i === n));
+  document.querySelectorAll('.popup-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+}
+function selectOpt(btn) {
+  btn.closest('.quiz-options').querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function selectBookingType(el) {
+  el.closest('.booking-types').querySelectorAll('.booking-type').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function handleEmailCapture(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = '✓ You\'re on the list';
+  btn.style.background = 'var(--sage)';
+}
+function handleBooking(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.submit-btn');
+  btn.textContent = '✓ Request received — we\'ll be in touch';
+  btn.style.background = 'var(--sage)';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
